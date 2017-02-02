@@ -1,0 +1,26 @@
+{
+  "name": "lomis-deliver-dashboard",
+  "version": "1.0.0",
+  "description": "Dashboard (Client side) for for LoMIS-deliver platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eHealthAfrica/lomis-deliver-dashboard"
+  },
+  "keywords": [
+    "LoMIS-deliver",
+    "VDD",
+    "vaccination",
+    "dashboard",
+    "ehealth"
+  ],
+  "author": "eHealth Africa <http://ehealthafrica.org>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eHealthAfrica/lomis-deliver-dashboard/issues"
+  },
+  "homepage": "https://github.com/eHealthAfrica/lomis-deliver-dashboard#readme"
+}
