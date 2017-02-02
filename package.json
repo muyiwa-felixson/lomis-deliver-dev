@@ -12,6 +12,8 @@
     "start": "NODE_ENV=development PORT=9006 webpack-dev-server --config ./webpack/webpack.config.js & NODE_ENV=development PORT=9007 node ./rootServer.js",
     "deploy": "npm build:webpack && npm build:server && NODE_ENV=production node ./rootServer.js",
     "pre-lint": "(cd \"./node_modules/\" && pwd)",
+    "preinstall": "npm prune",
+    "postinstall": "rsync pre-commit .git/hooks && chmod 755 .git/hooks/pre-commit",
     "analyze:build": "NODE_ENV=production webpack --json --config ./webpack/webpack.config.js  > bundle-stats.json",
     "analyze:json": "webpack-bundle-size-analyzer bundle-stats.json"
   },
