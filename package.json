@@ -10,7 +10,7 @@
     "prebuild:server": "rm -rf dist",
     "build:server": "babel ./src -d ./dist -D",
     "start": "NODE_ENV=development PORT=9006 webpack-dev-server --config ./webpack/webpack.config.js & NODE_ENV=development PORT=9007 node ./index.js",
-    "deploy": "npm build:webpack && npm build:server && NODE_ENV=production node ./index.js",
+    "deploy": "npm run build:webpack && npm run build:server && NODE_ENV=production node ./index.js",
     "pre-lint": "(cd \"./node_modules/\" && pwd)",
     "preinstall": "npm prune",
     "postinstall": "rsync pre-commit .git/hooks && chmod 755 .git/hooks/pre-commit",
@@ -104,6 +104,7 @@
     "express": "^4.14.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "superagent": "^3.4.3",
     "webpack-isomorphic-tools": "^2.6.5"
   }
 }
