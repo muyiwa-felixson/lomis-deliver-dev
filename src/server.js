@@ -9,6 +9,10 @@ const app = express();
 app.set('views', `${__dirname}/templates`);
 app.set('view engine', 'ejs');
 
+const development = (process.env.NODE_ENV || 'development') === 'development';
+if (!development) {
+  app.use('/assets', express.static(`${__dirname}/assets`, { maxAge: 86400 }));
+}
 // This should be the default route for testing html template
 // before being converted to react compoonent
 app.get('/templates/:templateName', (req, res) => {
