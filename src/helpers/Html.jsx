@@ -1,5 +1,6 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+import serialize from 'serialize-javascript';
 
 /**
  * Wrapper component containing HTML metadata and boilerplate tags.
@@ -10,7 +11,7 @@ import { renderToString } from 'react-dom/server';
  * HTML doctype declaration, which is added to the rendered output
  * by the server.js file.
  */
-export default ({ assets, component }) => { // eslint-disable-line
+export default ({ store, assets, component }) => { // eslint-disable-line
   const content = component ? renderToString(component) : 'Front End Repository';
   return (
     <html
@@ -30,6 +31,10 @@ export default ({ assets, component }) => { // eslint-disable-line
       </head>
       <body>
         <div id="content" dangerouslySetInnerHTML={{ __html: content }} />
+        <script
+          dangerouslySetInnerHTML={{ __html: `window.reduxData=${serialize(store.getState())};` }}
+          charSet="UTF-8"
+        />
         {Object.keys(assets.javascript).map((script, i) =>
             <script src={global.__DEVELOPMENT__ ? assets.javascript[script] : `${assets.javascript[script]}`} key={i} /> // eslint-disable-line
         )}

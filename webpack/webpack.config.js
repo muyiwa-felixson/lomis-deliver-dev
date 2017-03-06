@@ -28,6 +28,10 @@ module.exports = createConfig([
   addPlugins(plugins.extraConfigs(isDev)),
   defineConstants({
     'process.env.NODE_ENV': nodeEnv,
+    __SERVER__: false,
+    __CLIENT__: true,
+    __DEVELOPMENT__: isDev,
+    __DEVTOOLS__: isDev,
   }),
   customConfig({
     resolve: {
