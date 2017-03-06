@@ -1,4 +1,5 @@
 import superagent from 'superagent';
+import cookie from 'react-cookie';
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
@@ -16,7 +17,9 @@ export default class ApiClient {
         if (header) {
           request.set('Accept', header);
         }
-
+        if (cookie.load('accessToken')) {
+          request.set('Authorization', `Bearer ${cookie.load('accessToken')}`);
+        }
         if (params) {
           request.query(params);
         }
