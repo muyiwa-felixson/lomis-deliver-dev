@@ -1,21 +1,29 @@
-import React, { Component } from 'react';
-import { Header, Sidebar, DashboardTitle, DeliveryCountCard, StatusChart, RoundProgress } from 'components';
+import React, { Component, PropTypes } from 'react';
+import { Header, Sidebar, DashboardTitle, DeliveryCountCard, StatusChart } from 'components';
+import { connect } from 'react-redux';
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
   state = {};
 
   render() {
     return (
       <div id="page-content-wrapper">
         <div className="vertical-offset-50">
-          <Header />
+          <Header user={this.props.user} />
           <Sidebar />
           <DashboardTitle />
           <DeliveryCountCard />
-          <RoundProgress />
           <StatusChart />
         </div>
       </div>
     );
   }
 }
+
+Dashboard.propTypes = {
+  user: PropTypes.object.isRequired, //eslint-disable-line react/forbid-prop-types
+};
+
+const mapStateToProps = state => ({ user: state.user });
+
+export default connect(mapStateToProps)(Dashboard);
