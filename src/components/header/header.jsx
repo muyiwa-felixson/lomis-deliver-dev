@@ -34,8 +34,8 @@ class Header extends Component {
                   <span className="caret" />
                 </button>
                 <ul className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                  <li><a><i className="icon icon-settings pad-right" />Manage Profile</a></li>
-                  <li><a href="" onClick={this.handleSignOut}><i className="icon icon-exit-to-app pad-right" />Sign Out</a></li>
+                  <li><span><i className="icon icon-settings pad-right" />Manage Profile</span></li>
+                  <li><a href="" onClick={this.handleSignOut}><span><i className="icon icon-exit-to-app pad-right" />Sign Out</span></a></li>
                 </ul>
               </div>
             </div>
