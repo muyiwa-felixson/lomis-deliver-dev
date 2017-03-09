@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import cookie from 'react-cookie';
 import { browserHistory } from 'react-router';
 import Api from 'helpers/api';
+import config from 'config';
 
 require('./login.scss');
+const elogo = require('./images/ehealth-logo.png');
+const logo = require('./images/logo.png');
 
 export default class Login extends Component {
   state = {
@@ -20,14 +23,15 @@ export default class Login extends Component {
       username: username.value,
       password: password.value,
     };
-    apiClient.post('http://localhost:8080/v1/auth', 'application/x-www-form-urlencoded', {
+    apiClient.post(config.AUTH_URL, 'application/x-www-form-urlencoded', {
       data: userDetails,
     })
     .then((res) => {
-      console.log(res, 'res in login');
       cookie.save('accessToken', res.token, { path: '/' });
       browserHistory.push('/');
-    }).catch(err => err);
+    }).catch((err) => {
+      alert(`${err.message} Please try again.`);
+    });
     this.setState({
       username: username.value,
       password: password.value,
@@ -40,7 +44,7 @@ export default class Login extends Component {
           <div className="col-md-4 col-md-offset-4">
             <div className="panel">
               <div className="">
-                <img src="images/logo.png" role="presentation" className="img-responsive img-center" />
+                <img src={logo} role="presentation" className="img-responsive img-center" />
               </div>
               <div className="panel-body">
                 <form acceptCharset="UTF-8" role="form" onSubmit={this.handleLogin}>
@@ -58,7 +62,7 @@ export default class Login extends Component {
                 <div className="row">
                   <div className="powered-div col-md-6 col-md-offset-6">
                         Powered By:
-                    <img src="images/ehealth-logo.png" role="presentation" className="img-responsive" />
+                    <img src={elogo} role="presentation" className="img-responsive" />
                   </div>
                 </div>
                 <div className="copyright text-center">

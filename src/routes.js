@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
+import config from 'config';
 import { App, Dashboard, Login } from './containers';
 import Api from './helpers/api';
 
@@ -7,15 +8,15 @@ export default (store) => {
   const apiClient = new Api();
 
   function requireAuth(nextState, replace, cb) {
-    apiClient.get('http://localhost:8080/v1/users/me').then((res) => {
-      store.dispatch({ type: 'user_scucess', result: res.body });
+    apiClient.get(config.USER_URL).then((res) => {
+      store.dispatch({ type: 'GETUSER', result: res });
       cb();
     }, (error) => {
-      console.log(error);
+      console.error(error);
       replace('/login');
       cb();
     }).catch((error) => {
-      console.log(error);
+      console.error(error);
       replace('/login');
       cb();
     });
