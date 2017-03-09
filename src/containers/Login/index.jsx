@@ -41,8 +41,9 @@ export default class Login extends Component {
     return (
       <div className="container-fluid login-bg">
         <div className="row vertical-offset-100">
-          <div className="col-md-4 col-md-offset-4">
-            <div className="panel">
+          <div className="col-md-4" />
+          <div className="col-md-4" >
+            <div className="panel col-centered">
               <div className="">
                 <img src={logo} role="presentation" className="img-responsive img-center" />
               </div>
@@ -60,7 +61,8 @@ export default class Login extends Component {
                   </fieldset>
                 </form>
                 <div className="row">
-                  <div className="powered-div col-md-6 col-md-offset-6">
+                  <div className="col-md-6" />
+                  <div className="powered-div col-md-6">
                         Powered By:
                     <img src={elogo} role="presentation" className="img-responsive" />
                   </div>
