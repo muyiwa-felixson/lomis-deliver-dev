@@ -1,9 +1,7 @@
-import { LOADUSER } from 'redux/actions/userActions';
-
 export default (state = {}, action) => {
   switch (action.type) {
-    case LOADUSER:
-      return { ...state, user: Object.assign({}, action.user) };
+    case 'GETUSER':
+      return Object.assign({}, ...state, action.result);
     default:
       return state;
   }

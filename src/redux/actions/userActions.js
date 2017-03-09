@@ -1,6 +1,6 @@
-const getUser = user => ({
+const getUser = result => ({
   type: 'GETUSER',
-  user,
+  result,
 });
 
 export default { getUser };
