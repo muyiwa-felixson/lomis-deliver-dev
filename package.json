@@ -4,18 +4,14 @@
   "description": "Dashboard (Client side) for for LoMIS-deliver platform",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test karma start",
-    "prebuild:webpack": "rm -rf static/dist && rm -rf build",
-    "build:webpack": "NODE_ENV=production webpack --config ./webpack/webpack.config.js --display-error-details",
-    "prebuild:server": "rm -rf dist",
-    "build:server": "babel ./src -d ./dist -D",
-    "start": "NODE_ENV=development PORT=9006 webpack-dev-server --config ./webpack/webpack.config.js & NODE_ENV=development PORT=9007 node ./index.js",
-    "deploy": "npm run build:webpack && npm run build:server && NODE_ENV=production node ./index.js",
-    "pre-lint": "(cd \"./node_modules/\" && pwd)",
+    "test": "make test",
+    "dev": "make start",
+    "start": "make build_server && make build_webpack && make prod",
+    "pre-lint": "make pre_lint",
     "preinstall": "npm prune",
-    "postinstall": "rsync pre-commit .git/hooks && chmod 755 .git/hooks/pre-commit",
-    "analyze:build": "NODE_ENV=production webpack --json --config ./webpack/webpack.config.js  > bundle-stats.json",
-    "analyze:json": "webpack-bundle-size-analyzer bundle-stats.json"
+    "postinstall": "make post_install",
+    "analyze:build": "make analyze_build",
+    "analyze:json": "make analyze_json"
   },
   "repository": {
     "type": "git",

@@ -1,3 +1,4 @@
+require('dotenv').config(); // eslint-disable-line
 const path = require('path');
 const { addPlugins, createConfig, defineConstants, env, entryPoint, setOutput, sourceMaps, performance, customConfig } = require('@webpack-blocks/webpack2');
 const babel = require('@webpack-blocks/babel6');

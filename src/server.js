@@ -10,11 +10,16 @@ import ApiClient from 'helpers/api';
 import createStore from 'redux/create';
 import { Provider } from 'react-redux';
 
+require('dotenv').config(); // eslint-disable-line
+
 const app = express();
+const port = +process.env.PORT + 1 || 9007;
+const env = process.env.NODE_ENV || 'development';
+const development = (env === 'development');
+
 app.set('views', `${__dirname}/templates`);
 app.set('view engine', 'ejs');
 
-const development = (process.env.NODE_ENV || 'development') === 'development';
 if (!development) {
   app.use('/assets', express.static(`${__dirname}/assets`, { maxAge: 86400 }));
 }
@@ -55,9 +60,7 @@ app.get('*', (req, res) => {
   });
 });
 
-const port = process.env.PORT || 8000;
-
 export default () => app.listen(port, () => {
-  console.info(`==> 🌎  ENV=${process.env.NODE_ENV}`);
+  console.info(`==> 🌎  ENV=${env}`);
   console.info(`==> ✅  Front-end server is listening at http://localhost:${port}`);
 });
