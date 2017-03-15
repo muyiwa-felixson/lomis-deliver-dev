@@ -15,11 +15,10 @@ module.exports = function (config) {
       'tests.webpack.js', // Test files
     ],
     plugins: [
-      'karma-jasmine',
       'karma-chrome-launcher',
       'karma-coverage',
-      'karma-jasmine-html-reporter',
-      'karma-ng-html2js-preprocessor',
+      'karma-webpack',
+      'karma-sourcemap-loader',
     ],
     preprocessors: {
       'tests.webpack.js': ['webpack', 'sourcemap'], // preprocess with webpack and our sourcemap loader
@@ -36,6 +35,6 @@ module.exports = function (config) {
   });
 
   if (process.env.TRAVIS) {
-    config.browsers = ['Chrome_travis_ci'];
+    config.browsers = ['Chrome_travis_ci']; // eslint-disable-line no-param-reassign
   }
 };
