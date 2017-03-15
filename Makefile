@@ -19,7 +19,7 @@ prod:
 	NODE_ENV=production node ./index.js
 
 pre_lint:
-	cd ./node_modules/ && pwd
+	cd "./node_modules/" && pwd
 
 post_install:
 	rsync pre-commit .git/hooks && chmod 755 .git/hooks/pre-commit
