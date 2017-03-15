@@ -4,6 +4,7 @@ import React from 'react';
 import cookie from 'react-cookie';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
+import ReduxToastr from 'react-redux-toastr';
 import routes from 'routes';
 import Html from 'helpers/Html';
 import ApiClient from 'helpers/api';
@@ -43,7 +44,10 @@ app.get('*', (req, res) => {
     } else if (renderProps) {
       const component = (
         <Provider store={store} key="provider">
-          <RouterContext {...renderProps} />
+          <div>
+            <RouterContext {...renderProps} />
+            <ReduxToastr />
+          </div>
         </Provider>
         );
       // You can also check renderProps.components or renderProps.routes for

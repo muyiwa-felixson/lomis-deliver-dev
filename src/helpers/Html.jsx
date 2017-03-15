@@ -19,6 +19,7 @@ export default ({ store, assets, component }) => { // eslint-disable-line
     >
       <head>
         <link rel="shortcut icon" href="/favicon.ico" />
+        <link href="http://diegoddox.github.io/react-redux-toastr/4.4/react-redux-toastr.min.css" rel="stylesheet" type="text/css" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* styles (will be present only in production with webpack extract text plugin) */}
         {Object.keys(assets.styles).map((style, key) =>
@@ -28,6 +29,7 @@ export default ({ store, assets, component }) => { // eslint-disable-line
             rel="stylesheet" type="text/css" charSet="UTF-8"
           />,
           )}
+        <script src="https://use.fortawesome.com/944f6af3.js" />
       </head>
       <body>
         <div id="content" dangerouslySetInnerHTML={{ __html: content }} />
@@ -42,4 +44,3 @@ export default ({ store, assets, component }) => { // eslint-disable-line
     </html>
   );
 };
-

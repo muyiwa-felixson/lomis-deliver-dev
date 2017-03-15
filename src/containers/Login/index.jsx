@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import cookie from 'react-cookie';
 import { browserHistory } from 'react-router';
+import { toastr } from 'react-redux-toastr';
 import Api from 'helpers/api';
 import config from 'config';
 
@@ -29,8 +30,10 @@ export default class Login extends Component {
     .then((res) => {
       cookie.save('accessToken', res.token, { path: '/' });
       browserHistory.push('/');
+      toastr.success('You are logged in successfully!');
     }).catch((err) => {
-      alert(`${err.message} Please try again.`);
+      const errorMessage = err.message ? err.message : 'Fill in your login details.';
+      toastr.error(`${errorMessage} Please try again.`);
     });
     this.setState({
       username: username.value,
