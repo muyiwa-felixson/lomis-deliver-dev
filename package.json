@@ -7,7 +7,7 @@
     "test": "make test",
     "dev": "make start",
     "start": "make build_server && make build_webpack && make prod",
-    "pre-lint": "make pre_lint",
+    "pre-lint": "cd ./node_modules/ && pwd",
     "preinstall": "npm prune",
     "postinstall": "make post_install",
     "analyze:build": "make analyze_build",

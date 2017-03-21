@@ -38,7 +38,7 @@ export default ({ store, assets, component }) => { // eslint-disable-line
           charSet="UTF-8"
         />
         {Object.keys(assets.javascript).map((script, i) =>
-            <script src={global.__DEVELOPMENT__ ? assets.javascript[script] : `${assets.javascript[script]}`} key={i} /> // eslint-disable-line
+            <script src={global.__DEVELOPMENT__ ? assets.javascript[script] : `assets/${assets.javascript[script]}`} key={i} /> // eslint-disable-line
         )}
       </body>
     </html>
