@@ -7,19 +7,23 @@ const postcss = require('@webpack-blocks/postcss');
 const sass = require('@webpack-blocks/sass');
 const extractText = require('@webpack-blocks/extract-text2');
 const plugins = require('./webpack.plugins');
+const path = require('path');
+
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isDev = nodeEnv === 'development';
 const assetPath = isDev ? 'build' : 'dist/assets';
-const publicPath = isDev ? `http://localhost:${+process.env.PORT}/build` : ''; // this would change as soon as we have the proper config path setup
+const publicPath = isDev ? `http://localhost:${+process.env.PORT}/build` : '/assets/'; // this would change as soon as we have the proper config path setup
+const fileName = isDev ? '[name]' : '[name].[chunkHash]';
+
 module.exports = createConfig([
   entryPoint({
-    app: ['bootstrap-loader', './src/index', './src/client'],
+    app: ['babel-polyfill', 'bootstrap-loader', './src/client'],
   }),
   setOutput({
-    path: assetPath,
-    publicPath: `${publicPath}/`,
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, `../${assetPath}`),
+    publicPath,
+    filename: `${fileName}.js`,
   }),
   babel(),
   cssModules(),
@@ -74,7 +78,7 @@ module.exports = createConfig([
     addPlugins(plugins.development),
   ]),
   env('production', [
-    extractText('css/style.css', 'text/x-sass'), // hard coded literal ... i.e style.css will be change soon as soon as their is sample react component
+    extractText(`css/${fileName}.css`, 'text/x-sass'), // hard coded literal ... i.e style.css will be change soon as soon as their is sample react component
     addPlugins(plugins.production),
   ]),
 ]);

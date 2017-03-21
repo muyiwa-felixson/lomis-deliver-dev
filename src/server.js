@@ -22,7 +22,7 @@ app.set('views', `${__dirname}/templates`);
 app.set('view engine', 'ejs');
 
 if (!development) {
-  app.use('/assets', express.static(`${__dirname}/dist/assets`, { maxAge: 86400 }));
+  app.use('/assets', express.static(`${__dirname}/assets`));
 }
 // This should be the default route for testing html template
 // before being converted to react compoonent
