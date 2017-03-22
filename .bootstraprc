@@ -24,7 +24,7 @@ env:
     loglevel: debug
     extractStyles: false
   production:
-    extractStyles: true
+    extractStyles: false
 
 
 # Customize Bootstrap variables that get imported before the original Bootstrap variables.

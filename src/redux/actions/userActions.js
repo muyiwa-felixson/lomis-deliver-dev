@@ -1,5 +1,7 @@
+import { GET_USER } from 'redux/constants/users';
+
 const getUser = result => ({
-  type: 'GETUSER',
+  type: GET_USER,
   result,
 });
 

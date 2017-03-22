@@ -1,15 +1,16 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
+import { GET_USER } from 'redux/constants/users';
+import { App, Dashboard, Login } from 'containers';
+import Api from 'helpers/api';
 import config from 'config';
-import { App, Dashboard, Login } from './containers';
-import Api from './helpers/api';
 
 export default (store) => {
   const apiClient = new Api();
 
   function requireAuth(nextState, replace, cb) {
     apiClient.get(config.USER_URL).then((res) => {
-      store.dispatch({ type: 'GETUSER', result: res });
+      store.dispatch({ type: GET_USER, result: res });
       cb();
     }, (error) => {
       console.error(error);

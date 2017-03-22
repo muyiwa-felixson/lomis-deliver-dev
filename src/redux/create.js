@@ -1,6 +1,5 @@
 /* eslint-disable global-require */
 import { createStore as _createStore, applyMiddleware } from 'redux';
-
 import createMiddleware from './middleware/clientMiddleware';
 
 export default (client, data) => {

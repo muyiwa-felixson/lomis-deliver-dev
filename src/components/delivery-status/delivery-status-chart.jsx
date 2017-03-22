@@ -1,10 +1,30 @@
 import React, { Component } from 'react';
+import { DeliveryChart } from 'components';
 
 require('./chart.scss');
 
 export default class StatusChart extends Component {
   state = {};
+  chart1 = [{
+    percent: 30,
+    color: '#77d0fb',
+    emphasis: true,
+  },
+  {
+    percent: 60,
+    color: '#d35525',
+    emphasis: false,
+  }];
 
+  chart2 = [
+    { percent: 1, color: '#2f97c9', emphasis: true },
+    { percent: 0, color: '#77d0fb', emphasis: false },
+    { percent: 2, color: '#caeeff', emphasis: false },
+    { percent: 90, color: '#95c98a', emphasis: false },
+    { percent: 2, color: '#e5825d', emphasis: false },
+    { percent: 1, color: '#d35525', emphasis: false },
+    { percent: 3, color: '#a23d17', emphasis: true },
+  ];
   render() {
     return (
       <div className="stat-section row">
@@ -16,28 +36,26 @@ export default class StatusChart extends Component {
             <div className="row stat-legend">
               <div className="col-md-6 col-xs-12">
                 <span className="legend-data">
-                  <i className="fa fa-circle clightblue" />
+                  <i className="icon icon-circle clightblue" />
                   Total Actual Deliveries
                 </span>
               </div>
               <div className="col-md-6 col-xs-12">
                 <span className="legend-data">
-                  <i className="fa fa-circle corange" />
+                  <i className="icon icon-circle corange" />
                   Cancelled  Deliveries
                 </span>
               </div>
               <div className="col-md-6 col-xs-12">
                 <span className="legend-data">
-                  <i className="fa fa-circle cgrey" />
+                  <i className="icon icon-circle cgrey" />
                   Uncompleted Deliveries
                 </span>
               </div>
             </div>
             <div className="row chart-box">
               <div className="minichart delivery-chart-box">
-                <svg version="1.1" id="minisvg2" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="420px" height="420px" viewBox="0 0 450 450">
-                  <circle className="backdropblue" cx="225" cy="225" r="200" />
-                </svg>
+                <DeliveryChart chartData={this.chart1} />
               </div>
             </div>
           </div>
@@ -52,49 +70,47 @@ export default class StatusChart extends Component {
             <div className="row stat-legend more-point">
               <div className="col-md-6 col-xs-12">
                 <span className="legend-data">
-                  <i className="fa fa-circle cblue" />
+                  <i className="icon icon-circle cblue" />
                   Too Early Delivery
                   </span>
               </div>
               <div className="col-md-6 col-xs-12">
                 <span className="legend-data">
-                  <i className="fa fa-circle cred" />
+                  <i className="icon icon-circle cred" />
                   Too Late Deliveries
                 </span>
               </div>
               <div className="col-md-6 col-xs-12">
                 <span className="legend-data">
-                  <i className="fa fa-circle cblue-fade" />
-                  <i className="fa fa-circle cblue-fader" />
+                  <i className="icon icon-circle cblue-fade" />
+                  <i className="icon icon-circle cblue-fader" />
                   Early Deliveries [+4,+2]
                 </span>
               </div>
 
               <div className="col-md-6 col-xs-12">
                 <span className="legend-data">
-                  <i className="fa fa-circle cred-fade" />
-                  <i className="fa fa-circle cred-fader" />
+                  <i className="icon icon-circle cred-fade" />
+                  <i className="icon icon-circle cred-fader" />
                   Late Deliveries [-4,-2]
                 </span>
               </div>
               <div className="col-md-6 col-xs-12">
                 <span className="legend-data">
-                  <i className="fa fa-circle cgreen" />
+                  <i className="icon icon-circle cgreen" />
                   Ontime Deliveries
                 </span>
               </div>
               <div className="col-md-6 col-xs-12">
                 <span className="legend-data">
-                  <i className="fa fa-circle cgrey" />
+                  <i className="icon icon-circle cgrey" />
                   Upcoming Deliveries
                 </span>
               </div>
             </div>
             <div className="row chart-box">
               <div className="minichart delivery-chart-box">
-                <svg version="1.1" id="minisvg" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="420px" height="420px" viewBox="0 0 450 450">
-                  <circle className="backdrop" cx="225" cy="225" r="200" />
-                </svg>
+                <DeliveryChart chartData={this.chart2} />
               </div>
             </div>
           </div>
