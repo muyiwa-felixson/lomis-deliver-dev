@@ -24,7 +24,6 @@ export default class Login extends Component {
       username: username.value,
       password: password.value,
     };
-    console.log(config.AUTH_URL, 'auth_urlll');
     apiClient.post(config.AUTH_URL, 'application/x-www-form-urlencoded', {
       data: userDetails,
     })

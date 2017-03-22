@@ -13,7 +13,6 @@ export default (state = initialState, action) => {
       return { ...state, isLoading: true, error: false };
     case ROUNDS_SUCCESS: {
       const len = action.result.length;
-      console.log(action.result[len - 1], 'action in success');
       return { ...state, round: action.result[len - 1], isLoading: false, error: false };
     }
     case ROUNDS_FAILURE:

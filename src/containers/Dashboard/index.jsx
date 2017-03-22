@@ -11,7 +11,6 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.props.fetchRounds();
-    console.log(this.props.rounds, 'in cdm');
   }
 
   // renderDeliveryCount() {

@@ -11,7 +11,6 @@ class DeliveryCountCard extends Component {
   }
 
   render() {
-    console.log(this.props, 'props in delivery card');
     return (
       <div className="row dash-contain">
         <DeliveryCard color="lightblue" type="Expected" count="20" icon="truck-li" />
