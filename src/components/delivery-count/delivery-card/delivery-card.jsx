@@ -26,7 +26,7 @@ class DeliveryCard extends Component {
 DeliveryCard.propTypes = {
   icon: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  count: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
 };
 

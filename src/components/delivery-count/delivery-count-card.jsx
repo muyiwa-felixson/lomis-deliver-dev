@@ -12,24 +12,29 @@ class DeliveryCountCard extends Component {
 
   render() {
     return (
-      <div className="row dash-contain">
-        <DeliveryCard color="lightblue" type="Expected" count="20" icon="truck-li" />
-        <DeliveryCard color="blue" type="Actual" count="19" icon="like-li" />
-        <DeliveryCard color="red" type="Failed" count="1" icon="info" />
-        <DeliveryCard color="green" type="Billable" count="21" icon="receipt" />
+      <div>
+        { this.props.round && this.props.round.roundStatus.length > 0 ?
+          <div className="row dash-contain">
+            <DeliveryCard color="lightblue" type="Expected" count={this.props.round.roundStatus[0].value.totalDeliveries} icon="truck-li" />
+            <DeliveryCard color="blue" type="Actual" count={this.props.round.roundStatus[0].value.completedDeliveries} icon="like-li" />
+            <DeliveryCard color="red" type="Failed" count={this.props.round.roundStatus[0].value.failedDeliveries} icon="info" />
+            <DeliveryCard color="green" type="Billable" count={this.props.round.roundStatus[0].value.billableDeliveries} icon="receipt" />
+          </div> : '' }
       </div>
     );
   }
 }
 
 DeliveryCountCard.propTypes = {
-  fetchRoundCount: PropTypes.func.isRequired,
+  fetchRoundCount: PropTypes.func,
   roundID: PropTypes.string,
+  round: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 const mapStateToProps = state => ({
-  // user: state.user,
-  count: state.count,
+  user: state.user,
+  round: state.rounds,
 });
+
 
 export default connect(mapStateToProps, { fetchRoundCount })(DeliveryCountCard);
