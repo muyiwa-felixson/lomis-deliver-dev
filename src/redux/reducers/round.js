@@ -1,7 +1,7 @@
 import { ROUNDS_SUCCESS, ROUNDS_FAILURE, ROUNDS_REQUESTS, COUNT_REQUESTS, COUNT_SUCCESS, COUNT_FAILURE } from 'redux/constants/rounds';
 
 const initialState = {
-  round: [],
+  round: {},
   isLoading: false,
   error: false,
   roundStatus: [],
@@ -20,7 +20,7 @@ export default (state = initialState, action) => {
     case COUNT_REQUESTS:
       return { ...state, isLoading: true, error: false };
     case COUNT_SUCCESS:
-      return { ...state, roundStatus: action, isLoading: false, error: false };
+      return { ...state, roundStatus: action.result, isLoading: false, error: false };
     case COUNT_FAILURE:
       return { ...state, round: action.result, isLoading: false, error: true };
     default:
