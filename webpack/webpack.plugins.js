@@ -1,12 +1,10 @@
 const { webpack } = require('@webpack-blocks/webpack2');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
-const isoConfig = require('./isomorphic.config');
 const postcssFlexbugsFixes = require('postcss-flexbugs-fixes');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
-const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(isoConfig);
 exports.extraConfigs = isDev => [
   new webpack.ProvidePlugin({
     $: 'jquery',
@@ -25,6 +23,10 @@ exports.extraConfigs = isDev => [
     Tab: 'exports-loader?Tab!bootstrap/js/dist/tab',
     Tooltip: 'exports-loader?Tooltip!bootstrap/js/dist/tooltip',
     Util: 'exports-loader?Util!bootstrap/js/dist/util',
+  }),
+  new HtmlWebpackPlugin({
+    filename: 'index.html',
+    template: './src/index.html',
   }),
   new webpack.LoaderOptionsPlugin({
     minimize: !isDev,
@@ -59,13 +61,11 @@ exports.development = [
         // proxy the Webpack Dev Server endpoint
         // (which should be serving on http://localhost:3100/)
         // through BrowserSync
-      proxy: `http://localhost:${+process.env.PORT + 1}`,
+      proxy: `http://localhost:${+process.env.PORT}`,
       reload: false,
     }),
-  webpackIsomorphicToolsPlugin.development(),
 ];
 exports.production = [
-  webpackIsomorphicToolsPlugin,
   new webpack.optimize.UglifyJsPlugin({
     compress: {
       warnings: false,
