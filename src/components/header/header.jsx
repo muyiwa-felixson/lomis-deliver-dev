@@ -5,12 +5,7 @@ import { browserHistory } from 'react-router';
 const logo = require('./assets/logo.png');
 
 class Header extends Component {
-  state = {
-    user: {
-      name: '',
-      role: '',
-    },
-  };
+  state = {};
 
   handleSignOut = () => {
     cookie.remove('accessToken', { path: '/' });
