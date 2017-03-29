@@ -13,7 +13,7 @@ deploy:
     access_key_id: "AKIAIPAOEMDTQPFK64QA"
     secret_access_key:
       secure: "Vz9UPkiFijbEXpEwmGaz60zEQ7f+7BfB9X6Hf76tjsqYatiGv7Eu2pIrf92dz2VOlcnILS58YastZIz065cuLlaj1kkbjhKih7cesXPTuEZdjomwPJNmdQykPgevSmBiyZ52nIaZYbqwDKrGUuWqTtETHlKCUGvgdOn0NC3UEbNAORGoUmSTWyDOv5t5KyiBq5Nj4r6usWJhDBIaZCoDm1F6HrHq+9lhHGr9eBDlv9r6zF0Ts6H1+7YgfBSIrJboIanWProCkuB1C7MUa49/yDPS5+Lh5ogpwbAgKkdzcFswLKmjOWCoTbPsMrqlbpYcLPJlYrFZMTPu9kR61vQtHWzUdla+OI92tJE+i66qv800GII9Hyvz7o6s9I7CL2KwfReBiUz0sd8ANqNXKYveL9Hnu2uC+Wzu0ujB+20AnMgMtEpxX2FJXLDS1os+DeCsz5OnaPym2O7s41hUkwRB9wy/wawJQKkN/SlA//aQsBADuZhurntTL3F6krgdgayqMjs/BLpC3ckM0xNGkmiXvL503Gyi8UKY5F9earisn5E7W9eUXa8AeqWkjYA+1cXuCc8JIL+U6Be1pVgRKI/d74fp01j7Sb2EePDlIkqNiwzJYXZQCM27WU78vFfp7WjvLEKEeLnZR9sV7wziHz3F66Rlgv9Ytmm274N7sVF5Rgs="
-    bucket: "lomis-deliver-dashboard-dev"
+    bucket: "site.lomis-deliver-dashboard-dev-ehealthafrica-org"
     skip_cleanup: true
     local_dir: dist
     region: eu-west-1
@@ -23,7 +23,7 @@ deploy:
     access_key_id: "AKIAIQ2IH4LPVHOKHEIQ"
     secret_access_key:
       secure: "Vr8N0TD62NJbDPtwmEbIgiFeFDh3pl2WojDx/vNLoRnRR+m+NZELkpeamQx8t25UJkP6SbuLT7UkJULrEzEcFRyhjzAmeTFu9mHrLKSsvbWK2MXvmMLLoy9Tz0aZBsvh74iMGyiv8WOtla8zJZF3EMKb3mbsh24+c5RA0W7kqDQ9R1HhHDuxWOukshlyWxPLPGeDhgonZW40z+/dsTWqqG4p+nUtOySLUkcbIGvrafydgppcY4MeYyjKQwa8542PvrvDx696yZU0V4ssXzWrV/+QEyubgxOhb5wRyvmsnsW8UWsDSdSodmhWzl4wHlakY5iewxkMlD6Qxwzbfy5TmNHQrAefY1vhGgzX503yVoek7LQi5J8vRzpUFlZ1kEqcKTg6CezFwin2qXnAZyN8mEVeLZTlXI4pzCUp1O7WrCJepBglhUTOSWuATnapnbnD2Ixpy1Qo5F4G9FvQV8wKXssFOEXLcdNBk1NFrn2OMVZ2lH+RuB5HwNt6JnjoWQrdDW3Qw/IVN5PKW7nl9RZrQY+xeSRImq21RwGtmkMyQGGB54dJD0Dp1ADUyIYq3vk0fz/IEwfYdnjNVeL6yJtl9t2Zi7UlXREk36WzqpVXBU32Qh5E9WfJtZciMgnQG6i5iW5gy0vhgtw1oPvANxZCPCGbFy5+V53nP3qYSQCgK/8="
-    bucket: "lomis-deliver-dashboard-staging"
+    bucket: "site.lomis-deliver-dashboard-staging-ehealthafrica-org"
     skip_cleanup: true
     local_dir: dist
     region: eu-west-1
@@ -33,7 +33,7 @@ deploy:
     access_key_id: "AKIAI7K5E2TUZRZV4RVA"
     secret_access_key:
       secure: "gSD672E1tK4vIMyTt3wcYs4WROb0yDfIDAUSqj4gLF8afmOHsd4iDKp1pT96Whmhjfnnx5os0PthhVj6f9m9cut29G8/pNfeeqyOKahmEEu71MeKJo5uEcPn8D0JZDYGOekKdsf0HNWaKfg1tWko47aBKRIU4dkHyqCve8vOTjAieLejF4+DLscfwAlJzAz7kzity2jWweXhVvbQC7ngVgxDvMCkVn3O6vTjjmIyIvUE+vl9QL+0o3wZ9QRFoEaymp/6faRsVi8YbvadurK8x/m73pNYi8pH73k54M3N79B14ZSTP63O9g7q+2sDWpzp+OZGF4k1byo6tzGcFzOsEWxLu1BhuD6uBtd3QcZjfVx2AJUgKYU/FQmUBpN2AAyNTkMpn1/2KTF2ppPipe1e0h7fuvlZ0BOuS8o7Hcny7MZDUY1WDJVWVZOYoBVRYA01PYpEbXnnqN5WqGXw3UmQzTfr6WEEEIBr7JKxLikXsCrymVFU09uynLqZnqRRs6J1AcqFysb4BWRsshwMkPNVIOAARznPlyjOOFeHWTQiDKAeZG0ilHaxYO8bJPATjSYvjl//gwqaIg2GTcvkp19vwOkEdiK+WZN/jV9pAVZFY82ZGJPDgXp7excgSHtqGkiM2J9piHnPRgjYMQOlazlj0xjPfXKrmKUExZkUOZaiU+o="
-    bucket: "lomis-deliver-dashboard-production"
+    bucket: "site.lomis-deliver-dashboard-production-ehealthafrica-org"
     skip_cleanup: true
     local_dir: dist
     region: eu-west-1
