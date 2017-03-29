@@ -23,7 +23,7 @@ class Dashboard extends Component {
             <DashboardTitle round={this.props.rounds} />
             { this.props.rounds !== 'undefined' && this.props.rounds.round.id ? <DeliveryCountCard roundID={this.props.rounds.round.id} /> : '' }
             <ProgressBar position="80" complete="40" />
-            <StatusChart />
+            { this.props.rounds.roundStatus !== 'undefined' && this.props.rounds.roundStatus.length > 0 ? <StatusChart status={this.props.rounds.roundStatus} /> : '' }
           </div>
         </div>
       </div>
