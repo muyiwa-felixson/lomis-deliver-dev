@@ -1,4 +1,4 @@
-const BASE_URL = process.env.HOST || 'http://localhost:8080';
+const BASE_URL = process.env.HOST || 'https://lomis-deliver-api-dev.ehealthafrica.org';
 
 const config = {
   USER_URL: `${BASE_URL}/v1/users/me`,
