@@ -1,6 +1,8 @@
+.idea
+*.terraform
 .DS_Store
-/node_modules/*
-/build/*
+node_modules/*
+build/*
 npm-debug.log
 webpack-assets.json
 bundle-stats.json
@@ -8,4 +10,3 @@ static/dist
 dist
 coverage
 *.env
-.idea
