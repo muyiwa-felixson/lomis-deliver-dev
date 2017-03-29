@@ -4,7 +4,7 @@ WEBPACK_SERVER_CMD = node_modules/.bin/webpack-dev-server
 WEBPACK_BUNDLE_CMD = node_modules/.bin/webpack-bundle-size-analyzer
 
 start:
-	$(WEBPACK_SERVER_CMD) --config ./webpack/webpack.config.js & node ./index.js
+	$(WEBPACK_SERVER_CMD) --config ./webpack/webpack.config.js --port 9006
 
 test:
 	NODE_ENV=test karma start --single
