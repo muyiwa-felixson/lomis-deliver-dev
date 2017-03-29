@@ -16,7 +16,7 @@ build_server:
 	rm -rf dist && $(BABEL_CMD) ./src -d ./dist -D
 
 prod:
-	NODE_ENV=production node ./index.js
+	NODE_ENV=production node ./src/index.js
 
 pre_lint:
 	cd ./node_modules/ && pwd
