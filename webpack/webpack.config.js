@@ -13,7 +13,7 @@ const path = require('path');
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isDev = nodeEnv === 'development';
 const assetPath = isDev ? 'build' : 'dist';
-const publicPath = isDev ? `http://localhost:${+process.env.PORT}/` : '/'; // this would change as soon as we have the proper config path setup
+const publicPath = isDev ? '' : ''; // this would change as soon as we have the proper config path setup
 const fileName = isDev ? '[name]' : '[name].[chunkHash]';
 
 module.exports = createConfig([

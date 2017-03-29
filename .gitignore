@@ -8,3 +8,4 @@ static/dist
 dist
 coverage
 *.env
+.idea
