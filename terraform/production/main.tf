@@ -22,17 +22,6 @@ module "site-main" {
    not-found-response-path = "/404.html"
 }
 
-module "site-redirect" {
-   source = "github.com/eHealthAfrica/terraform-website-s3-cloudfront-route53//site-redirect"
-
-   region = "eu-west-1"
-   domain = "${var.project}-${var.environment}.${var.domain_name}"
-   duplicate-content-penalty-secret = "${var.project}-${var.environment}-secret"
-   deployer = "${var.project}-${var.environment}-user"
-   acm-certificate-arn = "${var.cert_arn}"
-   target = "${module.site-main.website_cdn_hostname}"
-}
-
 module "dns-cname" {
    source = "github.com/eHealthAfrica/terraform-website-s3-cloudfront-route53//r53-cname"
 
