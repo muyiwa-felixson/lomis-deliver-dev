@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import cookie from 'react-cookie';
-import { browserHistory } from 'react-router';
 
 const logo = require('./assets/logo.png');
 
@@ -9,7 +8,7 @@ class Header extends Component {
 
   handleSignOut = () => {
     cookie.remove('accessToken', { path: '/' });
-    browserHistory.push('/login');
+    this.props.router.push('/#/login');
   }
 
   render() {
@@ -42,7 +41,8 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  user: PropTypes.object.isRequired, //eslint-disable-line react/forbid-prop-types
+  router: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 export default Header;

@@ -16,7 +16,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
-        <Header user={this.props.user} />
+        <Header user={this.props.user} router={this.props.router} />
         <Sidebar />
         <div id="page-content-wrapper">
           <div className="vertical-offset-50">
@@ -34,6 +34,7 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   rounds: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  router: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   fetchRounds: PropTypes.func.isRequired,
 };
 
