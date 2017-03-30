@@ -1,20 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { DeliveryChart } from 'components';
 
 require('./chart.scss');
 
-export default class StatusChart extends Component {
+class StatusChart extends Component {
   state = {};
-  chart1 = [{
-    percent: 30,
-    color: '#77d0fb',
-    emphasis: true,
-  },
-  {
-    percent: 60,
-    color: '#d35525',
-    emphasis: false,
-  }];
 
   chart2 = [
     { percent: 1, color: '#2f97c9', emphasis: true },
@@ -25,7 +15,29 @@ export default class StatusChart extends Component {
     { percent: 1, color: '#d35525', emphasis: false },
     { percent: 3, color: '#a23d17', emphasis: true },
   ];
+
+  convertStatus = (status) => {
+    const percent = {};
+    percent.actualDeliveries = (status.completedDeliveries / status.totalDeliveries) * 100;
+    percent.uncompletedDeliveries = (status.uncompletedDeliveries / status.totalDeliveries) * 100;
+    percent.cancelledDeliveries = (status.cancelledDeliveries / status.totalDeliveries) * 100;
+
+    return percent;
+  };
+
   render() {
+    const status = this.props.status[0].value;
+    const firstChart = [{
+      percent: (status.completedDeliveries / status.totalDeliveries) * 100,
+      color: '#77d0fb',
+      emphasis: true,
+    },
+    {
+      percent: (status.uncompletedDeliveries / status.totalDeliveries) * 100,
+      color: '#d35525',
+      emphasis: false,
+    }];
+
     return (
       <div className="stat-section row">
         <div className="col-md-6 col-xs-12">
@@ -55,7 +67,7 @@ export default class StatusChart extends Component {
             </div>
             <div className="row chart-box">
               <div className="minichart delivery-chart-box">
-                <DeliveryChart chartData={this.chart1} />
+                <DeliveryChart chartData={firstChart} />
               </div>
             </div>
           </div>
@@ -119,3 +131,9 @@ export default class StatusChart extends Component {
     );
   }
 }
+
+StatusChart.propTypes = {
+  status: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+};
+
+export default StatusChart;

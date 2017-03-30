@@ -16,14 +16,14 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
-        <Header user={this.props.user} />
+        <Header user={this.props.user} router={this.props.router} />
         <Sidebar />
         <div id="page-content-wrapper">
           <div className="vertical-offset-50">
             <DashboardTitle round={this.props.rounds} />
             { this.props.rounds !== 'undefined' && this.props.rounds.round.id ? <DeliveryCountCard roundID={this.props.rounds.round.id} /> : '' }
             <ProgressBar position="80" complete="40" />
-            <StatusChart />
+            { this.props.rounds.roundStatus !== 'undefined' && this.props.rounds.roundStatus.length > 0 ? <StatusChart status={this.props.rounds.roundStatus} /> : '' }
           </div>
         </div>
       </div>
@@ -34,6 +34,7 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
   user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   rounds: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  router: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   fetchRounds: PropTypes.func.isRequired,
 };
 
