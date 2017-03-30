@@ -12,11 +12,17 @@ test:
 build_webpack:
 	rm -rf static/dist && rm -rf build && NODE_ENV=production $(WEBPACK_CMD) --config ./webpack/webpack.config.js --display-error-details
 
+build_webpack_test:
+	rm -rf static/dist && rm -rf dist && NODE_ENV=development $(WEBPACK_CMD) --config ./webpack/webpack.config.js --display-error-details
+
 build_server:
 	rm -rf dist && $(BABEL_CMD) ./src -d ./dist -D
 
 prod:
 	NODE_ENV=production node ./src/index.js
+
+test:
+	NODE_ENV=development node ./src/index.js
 
 pre_lint:
 	cd ./node_modules/ && pwd
