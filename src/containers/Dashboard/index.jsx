@@ -14,6 +14,10 @@ class Dashboard extends Component {
   }
 
   render() {
+    const deliveryCountCheck = this.props.rounds !== 'undefined' && this.props.rounds.round.id;
+    const statusCheck = this.props.rounds.roundStatus !== 'undefined' && this.props.rounds.roundStatus.length > 0;
+    const progressCheck = deliveryCountCheck && statusCheck;
+
     return (
       <div>
         <Header user={this.props.user} router={this.props.router} />
@@ -21,9 +25,9 @@ class Dashboard extends Component {
         <div id="page-content-wrapper">
           <div className="vertical-offset-50">
             <DashboardTitle round={this.props.rounds} />
-            { this.props.rounds !== 'undefined' && this.props.rounds.round.id ? <DeliveryCountCard roundID={this.props.rounds.round.id} /> : '' }
-            <ProgressBar position="80" complete="40" />
-            { this.props.rounds.roundStatus !== 'undefined' && this.props.rounds.roundStatus.length > 0 ? <StatusChart status={this.props.rounds.roundStatus} /> : '' }
+            { deliveryCountCheck ? <DeliveryCountCard roundID={this.props.rounds.round.id} /> : '' }
+            { progressCheck ? <ProgressBar roundDetails={this.props.rounds.round} status={this.props.rounds.roundStatus} /> : '' }
+            { statusCheck ? <StatusChart status={this.props.rounds.roundStatus} /> : '' }
           </div>
         </div>
       </div>
