@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import cookie from 'react-cookie';
-import { browserHistory } from 'react-router';
 import { toastr } from 'react-redux-toastr';
 import Api from 'helpers/api';
 import config from 'config';
@@ -9,7 +8,7 @@ require('./login.scss');
 const elogo = require('./images/ehealth-logo.png');
 const logo = require('./images/logo.png');
 
-export default class Login extends Component {
+class Login extends Component {
   state = {
     username: '',
     password: '',
@@ -29,7 +28,7 @@ export default class Login extends Component {
     })
     .then((res) => {
       cookie.save('accessToken', res.token, { path: '/' });
-      browserHistory.push('/');
+      this.props.router.push('/');
       toastr.success('You are logged in successfully!');
     }).catch((err) => {
       const errorMessage = err.message ? err.message : 'Fill in your login details.';
@@ -81,3 +80,9 @@ export default class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  router: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+};
+
+export default Login;
