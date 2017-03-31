@@ -18,7 +18,7 @@ class ProgressBar extends Component {
 
   handleDate = () => {
     const today = new Date();
-    return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+    return `${today.getFullYear()}-0${today.getMonth() + 1}-${today.getDate()}`;
   }
 
   render() {
