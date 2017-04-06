@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Header, Sidebar, DashboardTitle, DeliveryCountCard, StatusChart, ProgressBar } from 'components';
 import { connect } from 'react-redux';
 import { fetchRounds, fetchSingleRound, fetchRoundCount } from 'redux/actions/roundActions';
-import { fetchLocations } from 'redux/actions/locationActions';
+import fetchLocations from 'redux/actions/locationActions';
 
 require('./style.scss');
 

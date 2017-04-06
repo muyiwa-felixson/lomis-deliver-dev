@@ -71,12 +71,12 @@ class DashboardTitle extends Component {
                 <Select name="selected-location" placeholder="Select Location..." options={opt} simpleValue value={this.state.locationValue} onChange={this.updateLocation} />
               </div>
             </div>
+            <DateRange />
             <div className="col-md-4 col-sm-6 filter-input-case">
               <div className="inner-addon right-addon">
                 <Select name="selected-round" placeholder="Select Delivery Round..." options={this.state.roundResult} value={this.state.roundValue} onChange={this.getRound} />
               </div>
             </div>
-            <DateRange />
           </div>
         </div>
       </div>
