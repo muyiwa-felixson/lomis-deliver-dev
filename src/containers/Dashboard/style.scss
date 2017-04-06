@@ -16,7 +16,6 @@ body {
 	font-size: 14px;
 	line-height: 18px;
 	color: #4e4a4f;
-	background-color: #FFF;
  	font-weight: 400;
 	overflow-x: hidden;
 	margin: 0;
@@ -569,16 +568,17 @@ color:#777
 	margin-bottom:10px;
 	overflow: hidden;
 }
-.filter-box a {
+.filter-box .export-but {
 	padding: 10px 15px;
 	cursor: pointer;
 	margin: 10px 0;
+  display: inline-block;
 }
-.filter-box a i {
+.filter-box .export-but i {
 	padding-right: 5px;
 	display: inline-block;
 }
-.filter-box a:hover {
+.filter-box .export-but:hover {
 	background-color: #62afdd;
 	color: #fff;
 }
@@ -604,15 +604,19 @@ color:#777
 .table tbody tr td {
 	border-top: none;
 	border-bottom: 1px solid #eee;
+  padding:8px 10px;
 }
 .table.report-table tr td {
 	vertical-align: middle;
 }
-#wrapper .report-table .btn {
+.report-table .btn {
 	border-radius: 2px;
-	font-size: 0.9em;
+	font-size: 10px;
+  font-family: 'Open Sans', sans-serif;
 	min-width: 165px;
 	text-align: left;
+  padding:5px 10px;
+  line-height: 20px;
 }
 .report-table .btn i {
 	display: inline-block;
@@ -634,8 +638,15 @@ color:#777
 	display:inline-block;
 	font-weight: normal;
 /*	margin-right: 10px;*/
-	margin-top:2px;
+	margin-top:1px;
 	float: right;
+  border-radius: 10px;
+  width:20px;
+  padding:3px;
+  text-align: center;
+  background: #fff;
+//  color:#333;
+  line-height: 10px;
 }
 .report-table input[type=checkbox] {
 	border-radius: 2px;
@@ -934,10 +945,11 @@ color:#777
 .container .text-muted {
 	margin: 20px 0;
 }
-a,
+a {
+	text-decoration: none;
+}
 a:hover {
 	text-decoration: none;
-	color: #292b2c;
 }
 /* Accessories */
 .radius-secondary {
@@ -1030,6 +1042,9 @@ a:hover {
 }
 .no-mag{
     margin:0;
+}
+.no-pad{
+    padding:0;
 }
 
 @media(min-width:768px) {
