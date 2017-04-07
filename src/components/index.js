@@ -6,5 +6,4 @@ export DeliveryCard from './delivery-count/delivery-card/delivery-card';
 export DeliveryCountCard from './delivery-count/delivery-count-card';
 export DeliveryChart from './delivery-status/delivery-chart/delivery-chart';
 export StatusChart from './delivery-status/delivery-status-chart';
-export DateRange from './date-range/date-range';
 export ProgressBar from './progress-bar/progress-bar';

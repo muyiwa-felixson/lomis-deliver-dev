@@ -1,10 +1,109 @@
 import React, { Component, PropTypes } from 'react';
-import { DateRange } from 'components';
+import Select from 'react-select';
+import DatetimeRangePicker from 'react-bootstrap-datetimerangepicker';
+import Api from 'helpers/api';
+import config from 'config';
+import { connect } from 'react-redux';
+import { fetchSingleRound, fetchRoundCount } from 'redux/actions/roundActions';
+
+import 'bootstrap/scss/bootstrap.scss';
+import 'bootstrap-daterangepicker/daterangepicker.scss';
+import 'react-select/scss/default.scss';
+import './date-range.scss';
+
+
+const apiClient = new Api();
 
 class DashboardTitle extends Component {
-  state = {};
+  state = {
+    startDate: '',
+    endDate: '',
+    locationValue: '',
+    roundValue: '',
+    roundResult: [],
+  };
+
+  getRound = (val) => {
+    this.setState({
+      roundValue: val.value,
+    });
+    this.props.singleRound(val.value);
+    this.props.roundCount(val.value);
+  }
+
+  handleApply = (event, picker) => {
+    const location = this.state.locationValue !== '' ? this.state.location : 'Kano';
+    let startDate = new Date(picker.startDate.format('YYYY-MM-DD'));
+    let endDate = new Date(picker.endDate.format('YYYY-MM-DD'));
+    startDate = startDate.toISOString();
+    endDate = endDate.toISOString();
+    this.setState({
+      startDate: picker.startDate,
+      endDate: picker.endDate,
+    });
+    apiClient.get(`${config.LOCATION_AND_DATE_URL}/${location}`)
+      .then((resp) => {
+        const result = resp.filter((round) => { // eslint-disable-line
+          if (startDate <= round.value[0] && endDate >= round.value[0]) {
+            return round;
+          }
+        });
+        const filteredList = result.map((val) => {
+          const roundObj = {};
+          roundObj.value = val.id;
+          roundObj.label = val.id;
+
+          return roundObj;
+        });
+        this.setState({ roundResult: filteredList });
+      });
+  }
+
+  handleChange = (e) => {
+    console.log(e, 'handle change');
+  }
+
+  updateLocation = (val) => {
+    apiClient.get(`${config.ROUND_LOCATION_URL}/${val}`)
+      .then((res) => {
+        const result = res.map((round) => {
+          const roundObj = {};
+          roundObj.value = round.id;
+          roundObj.label = round.id;
+
+          return roundObj;
+        });
+        this.setState({ roundResult: result });
+      });
+    this.setState({
+      locationValue: val,
+    });
+  }
 
   render() {
+    const opt = this.props.locations !== undefined ?
+    this.props.locations.locations.map((location) => {
+      const obj = {};
+      obj.value = location.key;
+      obj.label = location.key;
+
+      return obj;
+    }) : '';
+
+    const labelValue = () => {
+      if (this.state.startDate === '') {
+        return 'Select Date Range';
+      }
+
+      const start = this.state.startDate.format('YYYY-MM-DD');
+      const end = this.state.endDate.format('YYYY-MM-DD');
+      let label = `${start} - ${end}`;
+      if (start === end) {
+        label = start;
+      }
+      return label;
+    };
+
     return (
       <div className="dash-filter row">
         <div className="col-md-5 col-sm-12">
@@ -22,21 +121,26 @@ class DashboardTitle extends Component {
             <div className="col-md-4 col-sm-6 filter-input-case">
               <div className="inner-addon right-addon">
                 <i className="icon icon-marker" />
-                <input type="text" className="form-control radius-secondary" />
+                <Select name="selected-location" placeholder="Select Location..." options={opt} simpleValue value={this.state.locationValue} onChange={this.updateLocation} />
               </div>
             </div>
             <div className="col-md-4 col-sm-6 filter-input-case">
-              <div className="inner-addon overflow right-addon inner-select radius-secondary">
-                <select className="form-control radius-secondary">
-                  <option>-Select Round-</option>
-                  <option>Round 1</option>
-                  <option>Round 2</option>
-                  <option>Round 3</option>
-                </select>
-                <i className="icon icon-caret-down" />
+              <DatetimeRangePicker
+                startDate={this.state.startDate}
+                endDate={this.state.endDate}
+                onApply={this.handleApply}
+              >
+                <div className="inner-addon right-addon">
+                  <i className="icon icon-calendar" />
+                  <input placeholder="Select Date Range" type="text" className="form-control radius-secondary" value={labelValue()} onChange={this.handleChange} />
+                </div>
+              </DatetimeRangePicker>
+            </div>
+            <div className="col-md-4 col-sm-6 filter-input-case">
+              <div className="inner-addon right-addon">
+                <Select name="selected-round" placeholder="Select Delivery Round..." options={this.state.roundResult} value={this.state.roundValue} onChange={this.getRound} />
               </div>
             </div>
-            <DateRange />
           </div>
         </div>
       </div>
@@ -46,6 +150,14 @@ class DashboardTitle extends Component {
 
 DashboardTitle.propTypes = {
   round: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  locations: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  singleRound: PropTypes.func.isRequired,
+  roundCount: PropTypes.func.isRequired,
 };
+const mapStatetoProps = ({ rounds, locations }) => ({ round: rounds, locations });
 
-export default DashboardTitle;
+export default connect(mapStatetoProps,
+  {
+    singleRound: fetchSingleRound,
+    roundCount: fetchRoundCount,
+  })(DashboardTitle);
