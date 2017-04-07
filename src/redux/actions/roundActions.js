@@ -18,6 +18,6 @@ export function fetchSingleRound(id) {
 export function fetchRoundCount(id) {
   return {
     types: [COUNT_REQUESTS, COUNT_SUCCESS, COUNT_FAILURE],
-    promise: client => client.get(`${config.ROUND_COUNT_URL}${id}`),
+    promise: client => client.get(`${config.ROUND_COUNT_URL}/${id}`),
   };
 }

@@ -41,7 +41,7 @@ class DashboardTitle extends Component {
       startDate: picker.startDate,
       endDate: picker.endDate,
     });
-    apiClient.get(`${config.LOCATION_AND_DATE_URL}${location}`)
+    apiClient.get(`${config.LOCATION_AND_DATE_URL}/${location}`)
       .then((resp) => {
         const result = resp.filter((round) => { // eslint-disable-line
           if (startDate <= round.value[0] && endDate >= round.value[0]) {
@@ -64,7 +64,7 @@ class DashboardTitle extends Component {
   }
 
   updateLocation = (val) => {
-    apiClient.get(`${config.ROUND_LOCATION_URL}${val}`)
+    apiClient.get(`${config.ROUND_LOCATION_URL}/${val}`)
       .then((res) => {
         const result = res.map((round) => {
           const roundObj = {};
