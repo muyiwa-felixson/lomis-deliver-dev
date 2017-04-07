@@ -30,7 +30,10 @@ class ProgressBar extends Component {
     return (
       <div className="page-content row radius-primary round-progress-box">
         <div>
-          <h3>Round Progress</h3>
+          { this.checkProgressStatus() !== 'incomplete round' ?
+            <h3>Round Progress <span>(Completed)</span></h3> :
+            <h3>Round Progress <span>(Ongoing)</span></h3>
+          }
         </div>
         <div className="round-progress">
           <div className="bar grey">
@@ -44,7 +47,7 @@ class ProgressBar extends Component {
             <span className="span-left"><strong>Start</strong><br />{roundDetails.doc.startDate}</span>
             <span className="span-right"><strong>End</strong><br />{roundDetails.doc.endDate}</span>
             { this.checkProgressStatus() !== 'incomplete round' ?
-              <div className="progress-day" style={{ width: '100%' }} /> :
+              <div className="progress-day" style={{ width: '100%', display: 'none' }} /> :
               <div className="progress-day" style={{ width: `${position}%` }}>
                 <span><strong>Today</strong><br />{ this.handleDate() }</span>
               </div>
