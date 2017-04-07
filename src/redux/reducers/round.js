@@ -20,7 +20,6 @@ export default (state = initialState, action) => {
     case SINGLE_ROUND_REQUEST:
       return { ...state, isLoading: true, error: false };
     case SINGLE_ROUND_SUCCESS:
-      console.log(action, 'action in single round success');
       return { ...state, round: action.result[0], isLoading: false, error: false };
     case SINGLE_ROUND_FAILURE:
       return { ...state, round: action.result, isLoading: false, error: true };
