@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Header, Sidebar, DashboardTitle, DeliveryCountCard, StatusChart, ProgressBar } from 'components';
 import { connect } from 'react-redux';
-import { fetchRounds } from 'redux/actions/roundActions';
-import { getUser } from 'redux/actions/userActions';
+import { fetchRounds, fetchSingleRound, fetchRoundCount } from 'redux/actions/roundActions';
+import fetchLocations from 'redux/actions/locationActions';
 
 require('./style.scss');
 
@@ -11,23 +11,25 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.props.fetchRounds();
+    this.props.fetchLocations();
   }
 
   render() {
-    const deliveryCountCheck = this.props.rounds !== 'undefined' && this.props.rounds.round.id;
-    const statusCheck = this.props.rounds.roundStatus !== 'undefined' && this.props.rounds.roundStatus.length > 0;
+    const deliveryCountCheck = this.props.roundsObject !== 'undefined' && this.props.roundsObject.round.id;
+    const statusCheck = this.props.roundsObject.roundStatus !== 'undefined' && this.props.roundsObject.roundStatus.length > 0;
     const progressCheck = deliveryCountCheck && statusCheck;
+    const locationsCheck = this.props.locationsObject !== 'undefined' && this.props.locationsObject.locations.length > 0;
 
     return (
       <div>
-        <Header user={this.props.user} router={this.props.router} />
+        <Header user={this.props.userObject} router={this.props.router} />
         <Sidebar />
         <div id="page-content-wrapper">
           <div className="vertical-offset-50">
-            <DashboardTitle round={this.props.rounds} />
-            { deliveryCountCheck ? <DeliveryCountCard roundID={this.props.rounds.round.id} /> : '' }
-            { progressCheck ? <ProgressBar roundDetails={this.props.rounds.round} status={this.props.rounds.roundStatus} /> : '' }
-            { statusCheck ? <StatusChart status={this.props.rounds.roundStatus} /> : '' }
+            { locationsCheck ? <DashboardTitle round={this.props.roundsObject} locations={this.props.locationsObject} /> : '' }
+            { deliveryCountCheck ? <DeliveryCountCard roundID={this.props.roundsObject.round.id} /> : '' }
+            { progressCheck ? <ProgressBar roundDetails={this.props.roundsObject.round} status={this.props.roundsObject.roundStatus} /> : '' }
+            { statusCheck ? <StatusChart status={this.props.roundsObject.roundStatus} /> : '' }
           </div>
         </div>
       </div>
@@ -36,15 +38,24 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  rounds: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  userObject: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  roundsObject: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  locationsObject: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   router: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   fetchRounds: PropTypes.func.isRequired,
+  fetchLocations: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  user: state.user,
-  rounds: state.rounds,
+  userObject: state.user,
+  roundsObject: state.rounds,
+  locationsObject: state.locations,
 });
 
-export default connect(mapStateToProps, { fetchRounds, getUser })(Dashboard);
+export default connect(mapStateToProps,
+  {
+    fetchRounds,
+    fetchSingleRound,
+    fetchLocations,
+    fetchRoundCount,
+  })(Dashboard);

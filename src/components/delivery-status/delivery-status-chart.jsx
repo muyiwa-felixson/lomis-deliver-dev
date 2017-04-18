@@ -95,16 +95,14 @@ class StatusChart extends Component {
               <div className="col-md-6 col-xs-12">
                 <span className="legend-data">
                   <i className="icon icon-circle cblue-fade" />
-                  <i className="icon icon-circle cblue-fader" />
-                  Early Deliveries [+4,+2]
+                  Early Deliveries
                 </span>
               </div>
 
               <div className="col-md-6 col-xs-12">
                 <span className="legend-data">
                   <i className="icon icon-circle cred-fade" />
-                  <i className="icon icon-circle cred-fader" />
-                  Late Deliveries [-4,-2]
+                  Late Deliveries
                 </span>
               </div>
               <div className="col-md-6 col-xs-12">

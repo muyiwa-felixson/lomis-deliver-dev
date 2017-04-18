@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactToooltip from 'react-tooltip';
 
 class ProgressBar extends Component {
   state = {};
@@ -30,21 +31,31 @@ class ProgressBar extends Component {
     return (
       <div className="page-content row radius-primary round-progress-box">
         <div>
-          <h3>Round Progress</h3>
+          { this.checkProgressStatus() !== 'incomplete round' ?
+            <h3>Round Progress <span>(Completed)</span></h3> :
+            <h3>Round Progress <span>(Ongoing)</span></h3>
+          }
         </div>
         <div className="round-progress">
           <div className="bar grey">
             { this.checkProgressStatus() === 'incomplete round' ?
-              <div className="bar-day" style={{ width: `${position}%` }} /> :
-              <div className="bar-day" style={{ width: '100%' }} />
+              <div data-tip data-for="day-bar" className="bar-day" style={{ width: `${position}%` }} /> :
+              <div data-tip data-for="day-bar" className="bar-day" style={{ width: '100%' }} />
             }
-            <div className="bar-complete" style={{ width: `${complete}%` }} />
+            <ReactToooltip id="day-bar" type="dark" effect="solid">
+              <p>{`${status.cancelledDeliveries} cancelled deliveries`}</p>
+              <p>{`${status.failedDeliveries} failed deliveries`}</p>
+            </ReactToooltip>
+            <div data-tip data-for="day-complete" className="bar-complete" style={{ width: `${complete}%` }} />
+            <ReactToooltip id="day-complete" type="dark" effect="solid">
+              <p>{`${status.completedDeliveries} completed deliveries`}</p>
+            </ReactToooltip>
           </div>
           <div className="progress-date">
             <span className="span-left"><strong>Start</strong><br />{roundDetails.doc.startDate}</span>
             <span className="span-right"><strong>End</strong><br />{roundDetails.doc.endDate}</span>
             { this.checkProgressStatus() !== 'incomplete round' ?
-              <div className="progress-day" style={{ width: '100%' }} /> :
+              <div className="progress-day" style={{ width: '100%', display: 'none' }} /> :
               <div className="progress-day" style={{ width: `${position}%` }}>
                 <span><strong>Today</strong><br />{ this.handleDate() }</span>
               </div>
