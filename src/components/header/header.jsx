@@ -25,10 +25,9 @@ class Header extends Component {
               <div className="dropdown">
                 <button className="btn btn-link dropdown-toggle radius-secondary bk_trans" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                   <i className="icon icon-user pad-right" /> {this.props.user.name}
-                  <span className="caret" />
                 </button>
                 <ul className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                  <li><span><i className="icon icon-settings pad-right" />Manage Profile</span></li>
+                  <li><a><i className="icon icon-settings pad-right" />Manage Profile</a></li>
                   <li><a href="" onClick={this.handleSignOut}><span><i className="icon icon-exit-to-app pad-right" />Sign Out</span></a></li>
                 </ul>
               </div>
