@@ -14,6 +14,13 @@ class Login extends Component {
     password: '',
     token: '',
   };
+
+  componentDidMount() {
+    if (cookie.load('accessToken')) {
+      this.props.router.push('/');
+    }
+  }
+
   handleLogin = (e) => {
     e.preventDefault();
 
