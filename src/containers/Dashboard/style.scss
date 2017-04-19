@@ -451,10 +451,10 @@ select.form-control:not([size]):not([multiple]) {
 	margin:15px 0 0 0;
 	overflow: hidden;
 }
-.dropdown-menu li span {
+.dropdown-menu li a {
   display: inline-block;
 	padding: 10px;
-	font-size: 0.8em;
+	font-size: 1.2em;
   cursor: pointer;
 }
 .dropdown-menu li:hover{
@@ -674,7 +674,10 @@ color:#777
 	color: #777;
 	font-size: 0.8em;
 }
-#report_pagination .pagination li a:hover, #report_pagination .pagination li a:focus, .report-pagination .pagination li span:hover, .report-pagination .pagination li span:focus {
+#report_pagination .pagination li a:hover,
+#report_pagination .pagination li a:focus,
+.report-pagination .pagination li span:hover,
+.report-pagination .pagination li span:focus {
 	background: #62afdd;
 	color: #fff;
 }
