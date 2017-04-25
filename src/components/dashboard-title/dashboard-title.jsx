@@ -110,13 +110,18 @@ class DashboardTitle extends Component {
       return label;
     };
 
+    const getRoundNumber = () => {
+      const id = this.props.round.round ? this.props.round.round.id : '';
+      return id.split('-')[1];
+    };
+
     return (
       <div className="dash-filter row">
         <div className="col-md-5 col-sm-12">
           <div className="dash-title">
             <h4>
-              <span>Delivery Round:</span>
-              <strong>{this.props.round.round.id}</strong>
+              <span>Round Number:</span>
+              <strong>{getRoundNumber()}</strong>
             </h4>
             <h4>
               <span>Location:</span>
