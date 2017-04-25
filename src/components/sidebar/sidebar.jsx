@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
+import { NewImport } from 'components';
 
 export default class Sidebar extends Component {
-  state = {};
+  state = {
+    open: false,
+  };
+
+  openModal = () => {
+    this.setState({ open: true });
+  }
 
   render() {
     return (
@@ -25,12 +32,13 @@ export default class Sidebar extends Component {
             </a>
           </li>
           <li>
-            <a className="menu-linker">
+            <a href="" className="menu-linker" onClick={this.openModal}>
               <i className="icon icon-sync" data-toggle="tooltip" data-container="body" data-placement="right" title="Imports" />
               Imports
             </a>
           </li>
         </ul>
+        <NewImport openModal={this.state.open} />
       </div>
     );
   }
