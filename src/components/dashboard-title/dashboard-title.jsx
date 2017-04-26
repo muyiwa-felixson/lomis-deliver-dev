@@ -31,6 +31,20 @@ class DashboardTitle extends Component {
     this.props.roundCount(val.value);
   }
 
+  getRoundListByLocation = (val) => {
+    apiClient.get(`${config.ROUND_LOCATION_URL}/${val}`)
+      .then((res) => {
+        const result = res.map((round) => {
+          const roundObj = {};
+          roundObj.value = round.id;
+          roundObj.label = round.id;
+
+          return roundObj;
+        });
+        this.setState({ roundResult: result });
+      });
+  }
+
   handleApply = (event, picker) => {
     const location = this.state.locationValue !== '' ? this.state.location : 'Kano';
     let startDate = new Date(picker.startDate.format('YYYY-MM-DD'));
@@ -63,18 +77,10 @@ class DashboardTitle extends Component {
     console.log(e, 'handle change');
   }
 
-  updateLocation = (val) => {
-    apiClient.get(`${config.ROUND_LOCATION_URL}/${val}`)
-      .then((res) => {
-        const result = res.map((round) => {
-          const roundObj = {};
-          roundObj.value = round.id;
-          roundObj.label = round.id;
+  roundOptions = this.state.locationValue === '' ? this.getRoundListByLocation(this.props.round.round.doc.state) : this.state.roundResult;
 
-          return roundObj;
-        });
-        this.setState({ roundResult: result });
-      });
+  updateLocation = (val) => {
+    this.getRoundListByLocation(val);
     this.setState({
       locationValue: val,
     });
@@ -104,13 +110,22 @@ class DashboardTitle extends Component {
       return label;
     };
 
+    const getRoundNumber = () => {
+      const id = this.props.round.round ? this.props.round.round.id : '';
+      return id.split('-')[1];
+    };
+
     return (
       <div className="dash-filter row">
         <div className="col-md-5 col-sm-12">
           <div className="dash-title">
             <h4>
-              <span>Delivery Round:</span>
-              <strong>{this.props.round.round.id}</strong>
+              <span>Round Number:</span>
+              <strong>{getRoundNumber()}</strong>
+            </h4>
+            <h4>
+              <span>Location:</span>
+              <strong>{this.props.round.round.doc.state}</strong>
             </h4>
             <span>Delivery Type:</span><strong>Monthly</strong>
           </div>
