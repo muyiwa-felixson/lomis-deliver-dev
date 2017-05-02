@@ -77,18 +77,10 @@ class DashboardTitle extends Component {
     console.log(e, 'handle change');
   }
 
-  updateLocation = (val) => {
-    // apiClient.get(`${config.ROUND_LOCATION_URL}/${val}`)
-    //   .then((res) => {
-    //     const result = res.map((round) => {
-    //       const roundObj = {};
-    //       roundObj.value = round.id;
-    //       roundObj.label = round.id;
+  roundOptions = (this.state.locationValue === '' && this.props.round && this.props.round.round.doc) ?
+    this.getRoundListByLocation(this.props.round.round.doc.state) : this.state.roundResult;
 
-    //       return roundObj;
-    //     });
-    //     this.setState({ roundResult: result });
-    //   });
+  updateLocation = (val) => {
     this.getRoundListByLocation(val);
     this.setState({
       locationValue: val,
