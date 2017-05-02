@@ -77,7 +77,8 @@ class DashboardTitle extends Component {
     console.log(e, 'handle change');
   }
 
-  roundOptions = this.state.locationValue === '' ? this.getRoundListByLocation(this.props.round.round.doc.state) : this.state.roundResult;
+  roundOptions = (this.state.locationValue === '' && this.props.round && this.props.round.round.doc) ?
+    this.getRoundListByLocation(this.props.round.round.doc.state) : this.state.roundResult;
 
   updateLocation = (val) => {
     this.getRoundListByLocation(val);
@@ -111,8 +112,13 @@ class DashboardTitle extends Component {
     };
 
     const getRoundNumber = () => {
-      const id = this.props.round.round ? this.props.round.round.id : '';
-      return id.split('-')[1];
+      const id = this.props.round && this.props.round.round && this.props.round.round.id ? this.props.round.round.id.split('-')[1] : '';
+      return id;
+    };
+
+    const getRoundLocation = () => {
+      const location = this.props.round.round && this.props.round.round.doc ? this.props.round.round.doc.state : '';
+      return location;
     };
 
     return (
@@ -125,7 +131,7 @@ class DashboardTitle extends Component {
             </h4>
             <h4>
               <span>Location:</span>
-              <strong>{this.props.round.round.doc.state}</strong>
+              <strong>{getRoundLocation()}</strong>
             </h4>
             <span>Delivery Type:</span><strong>Monthly</strong>
           </div>
