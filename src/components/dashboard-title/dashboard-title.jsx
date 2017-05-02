@@ -77,9 +77,18 @@ class DashboardTitle extends Component {
     console.log(e, 'handle change');
   }
 
-  roundOptions = this.state.locationValue === '' ? this.getRoundListByLocation(this.props.round.round.doc.state) : this.state.roundResult;
-
   updateLocation = (val) => {
+    // apiClient.get(`${config.ROUND_LOCATION_URL}/${val}`)
+    //   .then((res) => {
+    //     const result = res.map((round) => {
+    //       const roundObj = {};
+    //       roundObj.value = round.id;
+    //       roundObj.label = round.id;
+
+    //       return roundObj;
+    //     });
+    //     this.setState({ roundResult: result });
+    //   });
     this.getRoundListByLocation(val);
     this.setState({
       locationValue: val,
@@ -111,8 +120,13 @@ class DashboardTitle extends Component {
     };
 
     const getRoundNumber = () => {
-      const id = this.props.round.round ? this.props.round.round.id : '';
-      return id.split('-')[1];
+      const id = this.props.round && this.props.round.round && this.props.round.round.id ? this.props.round.round.id.split('-')[1] : '';
+      return id;
+    };
+
+    const getRoundLocation = () => {
+      const location = this.props.round.round && this.props.round.round.doc ? this.props.round.round.doc.state : '';
+      return location;
     };
 
     return (
@@ -125,7 +139,7 @@ class DashboardTitle extends Component {
             </h4>
             <h4>
               <span>Location:</span>
-              <strong>{this.props.round.round.doc.state}</strong>
+              <strong>{getRoundLocation()}</strong>
             </h4>
             <span>Delivery Type:</span><strong>Monthly</strong>
           </div>
