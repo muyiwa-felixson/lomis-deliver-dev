@@ -19,6 +19,8 @@ class DeliveryCountCard extends Component {
             <DeliveryCard color="blue" type="Actual" count={this.props.round.roundStatus[0].value.completedDeliveries} icon="like-li" />
             <DeliveryCard color="red" type="Failed" count={this.props.round.roundStatus[0].value.failedDeliveries} icon="info" />
             <DeliveryCard color="green" type="Billable" count={this.props.round.roundStatus[0].value.billableDeliveries} icon="receipt" />
+            <DeliveryCard color="orange" type="Cancelled" count={this.props.round.roundStatus[0].value.cancelledDeliveries} icon="ban-fa" />
+            <DeliveryCard color="grey" type="Unrecorded" count={this.props.round.roundStatus[0].value.uncompletedDeliveries} icon="record" />
           </div> : '' }
       </div>
     );
