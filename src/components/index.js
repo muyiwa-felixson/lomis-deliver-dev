@@ -7,3 +7,5 @@ export DeliveryCountCard from './delivery-count/delivery-count-card';
 export DeliveryChart from './delivery-status/delivery-chart/delivery-chart';
 export StatusChart from './delivery-status/delivery-status-chart';
 export ProgressBar from './progress-bar/progress-bar';
+export NewImport from './new-import/new-import';
+export ImportPop from './import-pop-up/import-pop';
