@@ -23,6 +23,7 @@ class Sidebar extends Component {
     roundNumber: '',
     sheetId: '',
     validUrl: null,
+    validRoundNumber: null,
     status: 'running',
   };
 
@@ -59,6 +60,15 @@ class Sidebar extends Component {
       this.setState({ validUrl: null });
     } else {
       this.setState({ validUrl: 'error' });
+    }
+  }
+
+  roundNumberCheck = (e) => {
+    const check = parseInt(e.target.value, 10);
+    if (typeof check === 'number' && check > 0) {
+      this.setState({ validRoundNumber: null });
+    } else {
+      this.setState({ validRoundNumber: 'error' });
     }
   }
 
@@ -111,7 +121,7 @@ class Sidebar extends Component {
 
   render() {
     const importCheck = this.props.roundObj && this.props.roundObj.importLoading;
-    const buttonStyle = (this.state.location === '' || this.state.location === null || this.state.roundNumber === '' || this.state.roundNumber === '0' || this.state.startDate === '' || this.state.endDate === '' || this.state.sheetId === '' || this.state.roundType === '' || this.state.roundType === null) ? ' disabled' : '';
+    const buttonStyle = (this.state.location === '' || this.state.location === null || this.state.roundNumber === '' || this.state.validRoundNumber === 'error' || this.state.startDate === '' || this.state.endDate === '' || this.state.sheetId === '' || this.state.validUrl === 'error' || this.state.roundType === '' || this.state.roundType === null) ? ' disabled' : '';
     const opt = this.props.locationsObj !== undefined ?
     this.props.locationsObj.locations.map((location) => {
       const obj = {};
@@ -188,9 +198,9 @@ class Sidebar extends Component {
                 </Row>
                 <Row>
                   <Col sm={6}>
-                    <FormGroup >
+                    <FormGroup validationState={this.state.validRoundNumber}>
                       <ControlLabel>Round Number</ControlLabel>
-                      <FormControl type="text" placeholder="Enter the Round code" name="roundNumber" value={this.state.roundNumber} onChange={this.handleRoundNumberChange} />
+                      <FormControl type="text" placeholder="Enter the Round code" onBlur={this.roundNumberCheck} name="roundNumber" value={this.state.roundNumber} onChange={this.handleRoundNumberChange} />
                       <FormControl.Feedback />
                     </FormGroup>
                   </Col>
