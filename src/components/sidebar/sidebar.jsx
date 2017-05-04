@@ -5,12 +5,16 @@ import { toastr } from 'react-redux-toastr';
 import { ImportPop } from 'components';
 import Select from 'react-select';
 import helper from 'helpers/round';
+import Api from 'helpers/api';
+import config from 'config';
 import { fetchImportedRound, fetchRoundCount, runImport, toggleSidebar } from 'redux/actions/roundActions';
 
 const roundTypeOptions = [
   { value: 'Bi-Weekly', label: 'Bi-Weekly' },
   { value: 'Monthly', label: 'Monthly' },
 ];
+
+const apiClient = new Api();
 
 class Sidebar extends Component {
   state = {
@@ -91,6 +95,25 @@ class Sidebar extends Component {
     });
   }
 
+  completeImport = (roundCode) => {
+    toastr.success('Completed Data Import!', { timeOut: 3000 });
+    this.setState({ status: 'complete', disableLink: '' });
+    this.props.fetchImportedRound(roundCode);
+    this.props.fetchRoundCount(roundCode);
+  }
+
+  pollServer = (roundCode) => {
+    apiClient.get(`${config.ROUND_URL}/${roundCode}`)
+      .then(() => {
+        this.completeImport(roundCode);
+      })
+      .catch(() => {
+        setTimeout(() => {
+          this.pollServer(roundCode);
+        }, 10000);
+      });
+  }
+
   handleImport = (e) => {
     e.preventDefault();
     this.setState({ showModal: false, disableLink: 'disabled' });
@@ -106,14 +129,10 @@ class Sidebar extends Component {
 
     this.props.runImport(importObject)
       .then((res) => {
+        const roundCode = res.roundCode;
         toastr.info(res.message, { timeOut: 3000 });
-        this.setState({ roundCode: res.roundCode });
-        setTimeout(() => {
-          toastr.success('Completed Data Import!', { timeOut: 3000 });
-          this.setState({ status: 'complete', disableLink: '' });
-          this.props.fetchImportedRound(res.roundCode);
-          this.props.fetchRoundCount(res.roundCode);
-        }, 120000);
+        this.setState({ roundCode });
+        this.pollServer(roundCode);
       })
       .catch((err) => {
         toastr.error(err.message, { timeOut: 3000 });
