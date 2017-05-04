@@ -5,7 +5,7 @@ import { toastr } from 'react-redux-toastr';
 import { ImportPop } from 'components';
 import Select from 'react-select';
 import helper from 'helpers/round';
-import { fetchImportedRound, fetchRoundCount, runImport } from 'redux/actions/roundActions';
+import { fetchImportedRound, fetchRoundCount, runImport, toggleSidebar } from 'redux/actions/roundActions';
 
 const roundTypeOptions = [
   { value: 'Bi-Weekly', label: 'Bi-Weekly' },
@@ -119,6 +119,14 @@ class Sidebar extends Component {
       });
   }
 
+  toggleMenu = () => {
+    if (this.props.roundObj.toggleState === 'untoggled') {
+      this.props.toggleSidebar('toggled');
+    } else {
+      this.props.toggleSidebar('untoggled');
+    }
+  }
+
   render() {
     const importCheck = this.props.roundObj && this.props.roundObj.importLoading;
     const buttonStyle = (this.state.location === '' || this.state.location === null || this.state.roundNumber === '' || this.state.validRoundNumber === 'error' || this.state.startDate === '' || this.state.endDate === '' || this.state.sheetId === '' || this.state.validUrl === 'error' || this.state.roundType === '' || this.state.roundType === null) ? ' disabled' : '';
@@ -133,9 +141,11 @@ class Sidebar extends Component {
     return (
       <div id="sidebar-wrapper">
         <div className="menu-button" >
-          <div className="btn btn-link radius-secondary bk_trans margin-menu-button" id="menu-toggle" data-toggle="tooltip" data-container="body" data-placement="right" title="Expand Menu">
+          <a href="#"  // eslint-disable-line
+            className="btn btn-link radius-secondary bk_trans margin-menu-button" onClick={this.toggleMenu} id="menu-toggle" data-toggle="tooltip" data-container="body" data-placement="right" title="Expand Menu"
+          >
             <i className="icon icon-menu" />
-          </div>
+          </a>
         </div>
         <ul className="sidebar-nav">
           <li>
@@ -233,6 +243,7 @@ Sidebar.propTypes = {
   fetchImportedRound: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
   fetchRoundCount: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
   runImport: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
+  toggleSidebar: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 const mapStateToProps = state => ({
@@ -242,4 +253,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  { fetchImportedRound, fetchRoundCount, runImport })(Sidebar);
+  { fetchImportedRound, fetchRoundCount, runImport, toggleSidebar })(Sidebar);
