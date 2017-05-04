@@ -25,6 +25,7 @@ class Sidebar extends Component {
     validUrl: null,
     validRoundNumber: null,
     status: 'running',
+    disableLink: '',
   };
 
   close = () => {
@@ -92,7 +93,7 @@ class Sidebar extends Component {
 
   handleImport = (e) => {
     e.preventDefault();
-    this.setState({ showModal: false });
+    this.setState({ showModal: false, disableLink: 'disabled' });
     const { state, sheetId, startDate, endDate, roundNumber, roundType } = e.target;
     const importObject = {
       state: state.value,
@@ -109,7 +110,7 @@ class Sidebar extends Component {
         this.setState({ roundCode: res.roundCode });
         setTimeout(() => {
           toastr.success('Completed Data Import!', { timeOut: 3000 });
-          this.setState({ status: 'complete' });
+          this.setState({ status: 'complete', disableLink: '' });
           this.props.fetchImportedRound(res.roundCode);
           this.props.fetchRoundCount(res.roundCode);
         }, 120000);
@@ -161,7 +162,7 @@ class Sidebar extends Component {
             </a>
           </li>
           <li>
-            <a href="#" className="menu-linker" // eslint-disable-line
+            <a href="#" className={`menu-linker ${this.state.disableLink}`} // eslint-disable-line
               onClick={this.open}
             >
               <i className="icon icon-sync" data-toggle="tooltip" data-container="body" data-placement="right" title="Imports" />
