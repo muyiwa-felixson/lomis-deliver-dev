@@ -33,8 +33,13 @@ class StatusChart extends Component {
       emphasis: true,
     },
     {
-      percent: (status.uncompletedDeliveries / status.totalDeliveries) * 100,
+      percent: (status.cancelledDeliveries / status.totalDeliveries) * 100,
       color: '#d35525',
+      emphasis: false,
+    },
+    {
+      percent: (status.uncompletedDeliveries / status.totalDeliveries) * 100,
+      color: '#aaa',
       emphasis: false,
     }];
 
@@ -48,7 +53,7 @@ class StatusChart extends Component {
             <div className="row stat-legend">
               <div className="col-md-6 col-xs-12">
                 <span className="legend-data">
-                  <i className="icon icon-circle clightblue" />
+                  <i className="icon icon-circle cblue-fade" />
                   Total Actual Deliveries
                 </span>
               </div>
