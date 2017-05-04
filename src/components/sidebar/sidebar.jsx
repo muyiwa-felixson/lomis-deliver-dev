@@ -2,10 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { Row, Col, Modal, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { toastr } from 'react-redux-toastr';
+import { ImportPop } from 'components';
 import Select from 'react-select';
-import Api from 'helpers/api';
 import helper from 'helpers/round';
-import config from 'config';
+import { fetchImportedRound, fetchRoundCount, runImport } from 'redux/actions/roundActions';
 
 const roundTypeOptions = [
   { value: 'Bi-Weekly', label: 'Bi-Weekly' },
@@ -23,6 +23,7 @@ class Sidebar extends Component {
     roundNumber: '',
     sheetId: '',
     validUrl: null,
+    status: '',
   };
 
   close = () => {
@@ -42,7 +43,7 @@ class Sidebar extends Component {
 
   handleTypeChange = (val) => {
     this.setState({
-      type: val,
+      roundType: val,
     });
   }
 
@@ -81,6 +82,7 @@ class Sidebar extends Component {
 
   handleImport = (e) => {
     e.preventDefault();
+    this.setState({ showModal: false });
     const { state, sheetId, startDate, endDate, roundNumber, roundType } = e.target;
     const importObject = {
       state: state.value,
@@ -91,21 +93,25 @@ class Sidebar extends Component {
       roundType: roundType.value,
     };
 
-    const apiClient = new Api();
-    apiClient.post(config.IMPORT_URL, 'application/x-www-form-urlencoded', {
-      data: importObject,
-    })
-    .then((res) => {
-      toastr.info(res.message);
-      this.setState({ showModal: false, roundCode: res.roundCode });
-    })
-    .catch((err) => {
-      toastr.error(err);
-    });
+    this.props.runImport(importObject)
+      .then((res) => {
+        toastr.info(res.message, { timeOut: 3000 });
+        this.setState({ roundCode: res.roundCode, status: 'running' });
+        setTimeout(() => {
+          toastr.success('Completed Data Import!', { timeOut: 3000 });
+          this.setState({ status: 'complete' });
+          this.props.fetchImportedRound(res.roundCode);
+          this.props.fetchRoundCount(res.roundCode);
+        }, 120000);
+      })
+      .catch((err) => {
+        toastr.error(err);
+      });
   }
 
   render() {
-    const buttonStyle = (this.state.location === '' || this.state.location === null || this.state.roundNumber === '' || this.state.roundNumber === '0' || this.state.startDate === '' || this.state.endDate === '' || this.state.sheetId === '' || this.state.type === '' || this.state.type === null) ? ' disabled' : '';
+    const importCheck = this.props.roundObj && this.props.roundObj.importLoading;
+    const buttonStyle = (this.state.location === '' || this.state.location === null || this.state.roundNumber === '' || this.state.roundNumber === '0' || this.state.startDate === '' || this.state.endDate === '' || this.state.sheetId === '' || this.state.roundType === '' || this.state.roundType === null) ? ' disabled' : '';
     const opt = this.props.locationsObj !== undefined ?
     this.props.locationsObj.locations.map((location) => {
       const obj = {};
@@ -191,7 +197,7 @@ class Sidebar extends Component {
                   <Col sm={6}>
                     <FormGroup >
                       <ControlLabel>Round Type</ControlLabel>
-                      <Select name="roundType" placeholder="Select Round Type..." simpleValue options={roundTypeOptions} value={this.state.type} onChange={this.handleTypeChange} />
+                      <Select name="roundType" placeholder="Select Round Type..." simpleValue options={roundTypeOptions} value={this.state.roundType} onChange={this.handleTypeChange} />
                       <FormControl.Feedback />
                     </FormGroup>
                   </Col>
@@ -205,18 +211,25 @@ class Sidebar extends Component {
             </Modal.Body>
           </Modal>
         </div>
+        { importCheck ? <ImportPop status={this.state.status} /> : '' }
       </div>
     );
   }
 }
 
 Sidebar.propTypes = {
+  roundObj: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   locationsObj: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  fetchImportedRound: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
+  fetchRoundCount: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
+  runImport: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 const mapStateToProps = state => ({
   user: state.user,
+  roundObj: state.rounds,
   locationsObj: state.locations,
 });
 
-export default connect(mapStateToProps, {})(Sidebar);
+export default connect(mapStateToProps,
+  { fetchImportedRound, fetchRoundCount, runImport })(Sidebar);
