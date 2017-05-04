@@ -23,7 +23,7 @@ class Sidebar extends Component {
     roundNumber: '',
     sheetId: '',
     validUrl: null,
-    status: '',
+    status: 'running',
   };
 
   close = () => {
@@ -96,7 +96,7 @@ class Sidebar extends Component {
     this.props.runImport(importObject)
       .then((res) => {
         toastr.info(res.message, { timeOut: 3000 });
-        this.setState({ roundCode: res.roundCode, status: 'running' });
+        this.setState({ roundCode: res.roundCode });
         setTimeout(() => {
           toastr.success('Completed Data Import!', { timeOut: 3000 });
           this.setState({ status: 'complete' });
