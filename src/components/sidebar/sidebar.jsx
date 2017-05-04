@@ -115,7 +115,7 @@ class Sidebar extends Component {
         }, 120000);
       })
       .catch((err) => {
-        toastr.error(err);
+        toastr.error(err.message, { timeOut: 3000 });
       });
   }
 
