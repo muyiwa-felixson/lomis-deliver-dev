@@ -23,13 +23,15 @@ class Dashboard extends Component {
     return (
       <div>
         <Header user={this.props.userObject} router={this.props.router} />
-        <Sidebar />
-        <div id="page-content-wrapper">
-          <div className="vertical-offset-50">
-            { locationsCheck ? <DashboardTitle round={this.props.roundsObject} locations={this.props.locationsObject} /> : '' }
-            { deliveryCountCheck ? <DeliveryCountCard roundID={this.props.roundsObject.round.id} /> : '' }
-            { progressCheck ? <ProgressBar roundDetails={this.props.roundsObject.round} status={this.props.roundsObject.roundStatus} /> : '' }
-            { statusCheck ? <StatusChart status={this.props.roundsObject.roundStatus} /> : '' }
+        <div id="wrapper" className={this.props.roundsObject.toggleState}>
+          <Sidebar />
+          <div id="page-content-wrapper">
+            <div className="vertical-offset-50">
+              { locationsCheck ? <DashboardTitle round={this.props.roundsObject} locations={this.props.locationsObject} /> : '' }
+              { deliveryCountCheck ? <DeliveryCountCard roundID={this.props.roundsObject.round.id} /> : '' }
+              { progressCheck ? <ProgressBar roundDetails={this.props.roundsObject.round} status={this.props.roundsObject.roundStatus} /> : '' }
+              { statusCheck ? <StatusChart status={this.props.roundsObject.roundStatus} /> : '' }
+            </div>
           </div>
         </div>
       </div>

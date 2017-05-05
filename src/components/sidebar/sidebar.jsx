@@ -5,7 +5,7 @@ import { toastr } from 'react-redux-toastr';
 import { ImportPop } from 'components';
 import Select from 'react-select';
 import helper from 'helpers/round';
-import { fetchImportedRound, fetchRoundCount, runImport } from 'redux/actions/roundActions';
+import { fetchImportedRound, fetchRoundCount, runImport, toggleSidebar } from 'redux/actions/roundActions';
 
 const roundTypeOptions = [
   { value: 'Bi-Weekly', label: 'Bi-Weekly' },
@@ -23,7 +23,9 @@ class Sidebar extends Component {
     roundNumber: '',
     sheetId: '',
     validUrl: null,
+    validRoundNumber: null,
     status: 'running',
+    disableLink: '',
   };
 
   close = () => {
@@ -62,6 +64,15 @@ class Sidebar extends Component {
     }
   }
 
+  roundNumberCheck = (e) => {
+    const check = parseInt(e.target.value, 10);
+    if (typeof check === 'number' && check > 0) {
+      this.setState({ validRoundNumber: null });
+    } else {
+      this.setState({ validRoundNumber: 'error' });
+    }
+  }
+
   handleRoundNumberChange = (val) => {
     this.setState({
       roundNumber: val.target.value,
@@ -82,7 +93,7 @@ class Sidebar extends Component {
 
   handleImport = (e) => {
     e.preventDefault();
-    this.setState({ showModal: false });
+    this.setState({ showModal: false, disableLink: 'disabled' });
     const { state, sheetId, startDate, endDate, roundNumber, roundType } = e.target;
     const importObject = {
       state: state.value,
@@ -99,19 +110,27 @@ class Sidebar extends Component {
         this.setState({ roundCode: res.roundCode });
         setTimeout(() => {
           toastr.success('Completed Data Import!', { timeOut: 3000 });
-          this.setState({ status: 'complete' });
+          this.setState({ status: 'complete', disableLink: '' });
           this.props.fetchImportedRound(res.roundCode);
           this.props.fetchRoundCount(res.roundCode);
         }, 120000);
       })
       .catch((err) => {
-        toastr.error(err);
+        toastr.error(err.message, { timeOut: 3000 });
       });
+  }
+
+  toggleMenu = () => {
+    if (this.props.roundObj.toggleState === 'untoggled') {
+      this.props.toggleSidebar('toggled');
+    } else {
+      this.props.toggleSidebar('untoggled');
+    }
   }
 
   render() {
     const importCheck = this.props.roundObj && this.props.roundObj.importLoading;
-    const buttonStyle = (this.state.location === '' || this.state.location === null || this.state.roundNumber === '' || this.state.roundNumber === '0' || this.state.startDate === '' || this.state.endDate === '' || this.state.sheetId === '' || this.state.roundType === '' || this.state.roundType === null) ? ' disabled' : '';
+    const buttonStyle = (this.state.location === '' || this.state.location === null || this.state.roundNumber === '' || this.state.validRoundNumber === 'error' || this.state.startDate === '' || this.state.endDate === '' || this.state.sheetId === '' || this.state.validUrl === 'error' || this.state.roundType === '' || this.state.roundType === null) ? ' disabled' : '';
     const opt = this.props.locationsObj !== undefined ?
     this.props.locationsObj.locations.map((location) => {
       const obj = {};
@@ -123,9 +142,11 @@ class Sidebar extends Component {
     return (
       <div id="sidebar-wrapper">
         <div className="menu-button" >
-          <div className="btn btn-link radius-secondary bk_trans margin-menu-button" id="menu-toggle" data-toggle="tooltip" data-container="body" data-placement="right" title="Expand Menu">
+          <a href="#"  // eslint-disable-line
+            className="btn btn-link radius-secondary bk_trans margin-menu-button" onClick={this.toggleMenu} id="menu-toggle" data-toggle="tooltip" data-container="body" data-placement="right" title="Expand Menu"
+          >
             <i className="icon icon-menu" />
-          </div>
+          </a>
         </div>
         <ul className="sidebar-nav">
           <li>
@@ -141,7 +162,7 @@ class Sidebar extends Component {
             </a>
           </li>
           <li>
-            <a href="#" className="menu-linker" // eslint-disable-line
+            <a href="#" className={`menu-linker ${this.state.disableLink}`} // eslint-disable-line
               onClick={this.open}
             >
               <i className="icon icon-sync" data-toggle="tooltip" data-container="body" data-placement="right" title="Imports" />
@@ -188,9 +209,9 @@ class Sidebar extends Component {
                 </Row>
                 <Row>
                   <Col sm={6}>
-                    <FormGroup >
+                    <FormGroup validationState={this.state.validRoundNumber}>
                       <ControlLabel>Round Number</ControlLabel>
-                      <FormControl type="text" placeholder="Enter the Round code" name="roundNumber" value={this.state.roundNumber} onChange={this.handleRoundNumberChange} />
+                      <FormControl type="text" placeholder="Enter the Round code" onBlur={this.roundNumberCheck} name="roundNumber" value={this.state.roundNumber} onChange={this.handleRoundNumberChange} />
                       <FormControl.Feedback />
                     </FormGroup>
                   </Col>
@@ -223,6 +244,7 @@ Sidebar.propTypes = {
   fetchImportedRound: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
   fetchRoundCount: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
   runImport: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
+  toggleSidebar: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 const mapStateToProps = state => ({
@@ -232,4 +254,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  { fetchImportedRound, fetchRoundCount, runImport })(Sidebar);
+  { fetchImportedRound, fetchRoundCount, runImport, toggleSidebar })(Sidebar);
