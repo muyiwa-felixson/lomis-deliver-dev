@@ -13,3 +13,4 @@ export const IMPORT_REQUESTS = '@@LOMIS/rounds/IMPORT_REQUESTS';
 export const COUNT_REQUESTS = '@@LOMIS/rounds/COUNT_REQUESTS';
 export const COUNT_SUCCESS = '@@LOMIS/rounds/COUNT_SUCCESS';
 export const COUNT_FAILURE = '@@LOMIS/rounds/COUNT_FAILURE';
+export const TOGGLE_CLICKED = '@@LOMIS/rounds/TOGGLED_CLICKED';

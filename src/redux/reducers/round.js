@@ -1,4 +1,4 @@
-import { ROUNDS_REQUESTS, ROUNDS_SUCCESS, ROUNDS_FAILURE, COUNT_REQUESTS, COUNT_SUCCESS, COUNT_FAILURE, SINGLE_ROUND_FAILURE, SINGLE_ROUND_SUCCESS, SINGLE_ROUND_REQUEST, IMPORTED_ROUND_REQUESTS, IMPORTED_ROUND_SUCCESS, IMPORTED_ROUND_FAILURE, IMPORT_REQUESTS, IMPORT_SUCCESS, IMPORT_FAILURE } from 'redux/constants/rounds';
+import { ROUNDS_REQUESTS, ROUNDS_SUCCESS, ROUNDS_FAILURE, COUNT_REQUESTS, COUNT_SUCCESS, COUNT_FAILURE, SINGLE_ROUND_FAILURE, SINGLE_ROUND_SUCCESS, SINGLE_ROUND_REQUEST, IMPORTED_ROUND_REQUESTS, IMPORTED_ROUND_SUCCESS, IMPORTED_ROUND_FAILURE, IMPORT_REQUESTS, IMPORT_SUCCESS, IMPORT_FAILURE, TOGGLE_CLICKED } from 'redux/constants/rounds';
 
 const initialState = {
   round: {},
@@ -7,6 +7,7 @@ const initialState = {
   roundStatus: [],
   importLoading: false,
   importMessage: '',
+  toggleState: 'untoggled',
 };
 
 export default (state = initialState, action) => {
@@ -43,6 +44,8 @@ export default (state = initialState, action) => {
       return { ...state, importLoading: true, importMessage: action.result, error: false };
     case IMPORT_FAILURE:
       return { ...state, importLoading: false, importMessage: action.result, error: true };
+    case TOGGLE_CLICKED:
+      return { ...state, toggleState: action.value };
     default:
       return state;
   }
