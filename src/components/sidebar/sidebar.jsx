@@ -7,7 +7,7 @@ import Select from 'react-select';
 import helper from 'helpers/round';
 import Api from 'helpers/api';
 import config from 'config';
-import { fetchImportedRound, fetchRoundCount, runImport, toggleSidebar } from 'redux/actions/roundActions';
+import { fetchImportedRound, fetchSingleRound, fetchRoundCount, runImport, toggleSidebar } from 'redux/actions/roundActions';
 
 const roundTypeOptions = [
   { value: 'Bi-Weekly', label: 'Bi-Weekly' },
@@ -273,4 +273,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  { fetchImportedRound, fetchRoundCount, runImport, toggleSidebar })(Sidebar);
+  { fetchImportedRound, fetchSingleRound, fetchRoundCount, runImport, toggleSidebar })(Sidebar);
