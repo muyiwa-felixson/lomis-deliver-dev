@@ -5,16 +5,12 @@ import { toastr } from 'react-redux-toastr';
 import { ImportPop } from 'components';
 import Select from 'react-select';
 import helper from 'helpers/round';
-import Api from 'helpers/api';
-import config from 'config';
 import { fetchImportedRound, fetchSingleRound, fetchRoundCount, runImport, toggleSidebar } from 'redux/actions/roundActions';
 
 const roundTypeOptions = [
   { value: 'Bi-Weekly', label: 'Bi-Weekly' },
   { value: 'Monthly', label: 'Monthly' },
 ];
-
-const apiClient = new Api();
 
 class Sidebar extends Component {
   state = {
@@ -103,7 +99,7 @@ class Sidebar extends Component {
   }
 
   pollServer = (roundCode) => {
-    apiClient.get(`${config.ROUND_URL}/${roundCode}`)
+    this.props.fetchSingleRound(roundCode)
       .then(() => {
         this.completeImport(roundCode);
       })
@@ -129,12 +125,13 @@ class Sidebar extends Component {
 
     this.props.runImport(importObject)
       .then((res) => {
+        toastr.info('Spreadsheet import in progress.', { timeOut: 3000 });
         const roundCode = res.roundCode;
-        toastr.info(res.message, { timeOut: 3000 });
         this.setState({ roundCode });
         this.pollServer(roundCode);
       })
       .catch((err) => {
+        this.setState({ disableLink: '' });
         toastr.error(err.message, { timeOut: 3000 });
       });
   }
@@ -262,6 +259,7 @@ Sidebar.propTypes = {
   locationsObj: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   fetchImportedRound: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
   fetchRoundCount: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
+  fetchSingleRound: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
   runImport: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
   toggleSidebar: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
 };
