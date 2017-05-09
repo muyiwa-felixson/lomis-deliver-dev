@@ -8,7 +8,7 @@ const config = {
   ROUND_URL: `${BASE_URL}/v1/rounds`,
   ROUND_LOCATION_URL: `${BASE_URL}/v1/rounds/rounds-by-location`,
   ROUND_COUNT_URL: `${BASE_URL}/v1/rounds/round-status`,
-  IMPORT_URL: `${BASE_URL}/v1/rounds/round/new`,
+  IMPORT_URL: `${BASE_URL}/v1/rounds/new`,
 };
 
 export default config;
