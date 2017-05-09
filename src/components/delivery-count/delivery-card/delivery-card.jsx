@@ -15,6 +15,7 @@ class DeliveryCard extends Component {
             <span className={`c${this.props.color}`}>
               {this.props.type}
             </span>
+            { this.props.type === 'No Report' ? '' : ' Delivery' }
           </div>
         </div>
       </div>
