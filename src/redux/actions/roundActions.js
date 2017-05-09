@@ -18,7 +18,7 @@ export function fetchSingleRound(id) {
 export function fetchImportedRound(id) {
   return {
     types: [IMPORTED_ROUND_REQUESTS, IMPORTED_ROUND_SUCCESS, IMPORTED_ROUND_FAILURE],
-    promise: client => client.get(`${config.ROUND_URL}/${id}`),
+    promise: client => client.get(`${config.ROUND_URL}/round/${id}`),
   };
 }
 
