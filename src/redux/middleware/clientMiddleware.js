@@ -16,7 +16,7 @@ export default function clientMiddleware(client) {
           next({ ...rest, result, type: SUCCESS });
         },
         (error) => {
-          console.error('PROMISE ERROR:', error);
+          // console.error('PROMISE ERROR:', error);
           next({ ...rest, error, type: FAILURE });
         },
       ).catch((error) => {

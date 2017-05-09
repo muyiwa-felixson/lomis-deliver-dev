@@ -5,7 +5,7 @@ import { toastr } from 'react-redux-toastr';
 import { ImportPop } from 'components';
 import Select from 'react-select';
 import helper from 'helpers/round';
-import { fetchImportedRound, fetchRoundCount, runImport, toggleSidebar } from 'redux/actions/roundActions';
+import { fetchImportedRound, fetchSingleRound, fetchRoundCount, runImport, toggleSidebar } from 'redux/actions/roundActions';
 
 const roundTypeOptions = [
   { value: 'Bi-Weekly', label: 'Bi-Weekly' },
@@ -91,6 +91,25 @@ class Sidebar extends Component {
     });
   }
 
+  completeImport = (roundCode) => {
+    toastr.success('Completed Data Import!', { timeOut: 3000 });
+    this.setState({ status: 'complete', disableLink: '' });
+    this.props.fetchImportedRound(roundCode);
+    this.props.fetchRoundCount(roundCode);
+  }
+
+  pollServer = (roundCode) => {
+    this.props.fetchSingleRound(roundCode)
+      .then(() => {
+        this.completeImport(roundCode);
+      })
+      .catch(() => {
+        setTimeout(() => {
+          this.pollServer(roundCode);
+        }, 10000);
+      });
+  }
+
   handleImport = (e) => {
     e.preventDefault();
     this.setState({ showModal: false, disableLink: 'disabled' });
@@ -106,16 +125,13 @@ class Sidebar extends Component {
 
     this.props.runImport(importObject)
       .then((res) => {
-        toastr.info(res.message, { timeOut: 3000 });
-        this.setState({ roundCode: res.roundCode });
-        setTimeout(() => {
-          toastr.success('Completed Data Import!', { timeOut: 3000 });
-          this.setState({ status: 'complete', disableLink: '' });
-          this.props.fetchImportedRound(res.roundCode);
-          this.props.fetchRoundCount(res.roundCode);
-        }, 120000);
+        toastr.info('Spreadsheet import in progress.', { timeOut: 3000 });
+        const roundCode = res.roundCode;
+        this.setState({ roundCode });
+        this.pollServer(roundCode);
       })
       .catch((err) => {
+        this.setState({ disableLink: '' });
         toastr.error(err.message, { timeOut: 3000 });
       });
   }
@@ -243,6 +259,7 @@ Sidebar.propTypes = {
   locationsObj: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   fetchImportedRound: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
   fetchRoundCount: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
+  fetchSingleRound: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
   runImport: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
   toggleSidebar: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
 };
@@ -254,4 +271,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  { fetchImportedRound, fetchRoundCount, runImport, toggleSidebar })(Sidebar);
+  { fetchImportedRound, fetchSingleRound, fetchRoundCount, runImport, toggleSidebar })(Sidebar);
