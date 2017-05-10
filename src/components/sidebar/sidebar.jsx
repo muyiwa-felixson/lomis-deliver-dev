@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { toastr } from 'react-redux-toastr';
 import { ImportPop } from 'components';
 import Select from 'react-select';
-import helper from 'helpers/round';
+import helper from 'helpers/validation';
 import { fetchImportedRound, fetchSingleRound, fetchRoundCount, runImport, toggleSidebar } from 'redux/actions/roundActions';
 
 const roundTypeOptions = [
@@ -23,6 +23,7 @@ class Sidebar extends Component {
     roundNumber: '',
     sheetId: '',
     validUrl: null,
+    validDate: null,
     validRoundNumber: null,
     status: 'running',
     disableLink: '',
@@ -110,6 +111,28 @@ class Sidebar extends Component {
       });
   }
 
+  endDateCheck = (e) => {
+    const sd = this.state.startDate;
+    const ed = e.target.value;
+    const check = helper.checkModalDate(sd, ed);
+    if (check) {
+      this.setState({ validDate: null });
+    } else {
+      this.setState({ validDate: 'error' });
+    }
+  }
+
+  startDateCheck = (e) => {
+    const ed = this.state.endDate;
+    const sd = e.target.value;
+    const check = helper.checkModalDate(sd, ed);
+    if (check) {
+      this.setState({ validDate: null });
+    } else {
+      this.setState({ validDate: 'error' });
+    }
+  }
+
   handleImport = (e) => {
     e.preventDefault();
     this.setState({ showModal: false, disableLink: 'disabled' });
@@ -145,8 +168,9 @@ class Sidebar extends Component {
   }
 
   render() {
+    const check = helper.checkModalDate(this.state.startDate, this.state.endDate);
     const importCheck = this.props.roundObj && this.props.roundObj.importLoading;
-    const buttonStyle = (this.state.location === '' || this.state.location === null || this.state.roundNumber === '' || this.state.validRoundNumber === 'error' || this.state.startDate === '' || this.state.endDate === '' || this.state.sheetId === '' || this.state.validUrl === 'error' || this.state.roundType === '' || this.state.roundType === null) ? ' disabled' : '';
+    const buttonStyle = (this.state.location === '' || this.state.location === null || this.state.roundNumber === '' || this.state.validRoundNumber === 'error' || this.state.startDate === '' || this.state.endDate === '' || this.state.sheetId === '' || this.state.validUrl === 'error' || this.state.roundType === '' || this.state.roundType === null || !check) ? ' disabled' : '';
     const opt = this.props.locationsObj !== undefined ?
     this.props.locationsObj.locations.map((location) => {
       const obj = {};
@@ -209,16 +233,16 @@ class Sidebar extends Component {
                 </FormGroup>
                 <Row>
                   <Col sm={6}>
-                    <FormGroup >
+                    <FormGroup validationState={this.state.validDate}>
                       <ControlLabel>Start Date</ControlLabel>
-                      <FormControl type="date" name="startDate" value={this.state.startDate} onChange={this.handleStartDateChange} />
+                      <FormControl type="date" name="startDate" value={this.state.startDate} onBlur={this.startDateCheck} onChange={this.handleStartDateChange} />
                       <FormControl.Feedback />
                     </FormGroup>
                   </Col>
                   <Col sm={6}>
-                    <FormGroup >
+                    <FormGroup validationState={this.state.validDate}>
                       <ControlLabel>End Date</ControlLabel>
-                      <FormControl type="date" name="endDate" value={this.state.endDate} onChange={this.handleEndDateChange} />
+                      <FormControl type="date" name="endDate" value={this.state.endDate} onBlur={this.endDateCheck} onChange={this.handleEndDateChange} />
                       <FormControl.Feedback />
                     </FormGroup>
                   </Col>
