@@ -1,0 +1,81 @@
+.progressFullBar{
+    height:10px;
+    margin-top:0px;
+    background-color:#ddd;
+    overflow: hidden;
+}
+.progressDay{
+    height:10px;
+    overflow: visible;
+    animation: widen 1s forwards ease-out;
+    box-shadow:5px 0px 10px rgba(0,0,0,0.2);
+}
+.progressPlaceholder{
+    width: 100%;
+    height: 10px;
+    overflow: visible;
+}
+.progressStatus{
+    float:left;
+    margin:0;
+    padding:0;
+    height:10px;
+    width:0;
+}
+.progressDayDate{
+    font-size:10px;
+    width:3%;
+    text-align: right;
+    animation: widen 1s forwards ease-out;
+    overflow: visible;
+    padding-bottom:5px;
+    position: relative;
+}
+.progressDayDate span{
+    display:inline-block;
+    min-width:60px;
+    text-align:right;
+    margin-right:-5px;
+    line-height: 16px;
+    background:#fff;
+    padding-bottom:5px;
+}
+.progressDayDate i{
+    position: absolute;
+    bottom:0;
+    right:-5px;
+    font-size:12px;
+    color:#999;
+    display: block;
+    width:10px;
+    height:10px;
+    text-align: center;
+}
+.redGradient{
+    background:#e31a1a;
+    background: -moz-linear-gradient(left, #e31a1a 0%, #f0542a 100%);
+    background: -webkit-linear-gradient(left, #e31a1a 0%,#f0542a 100%);
+    background: linear-gradient(to right, #e31a1a 0%,#f0542a 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e31a1a', endColorstr='#f0542a',GradientType=1 );
+}
+.orangeGradient{
+    background:#eca22d;
+    background: -moz-linear-gradient(left, #eca22d 0%, #f5ac38 100%);
+    background: -webkit-linear-gradient(left, #eca22d 0%,#f5ac38 100%);
+    background: linear-gradient(to right, #eca22d 0%,#f5ac38 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eca22d', endColorstr='#f5ac38',GradientType=1 );
+}
+.greyGrad{
+    background:#666;
+    background: -moz-linear-gradient(left, #666 0%, #777 100%);
+    background: -webkit-linear-gradient(left, #666 0%,#777 100%);
+    background: linear-gradient(to right, #666 0%,#777 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#666', endColorstr='#777',GradientType=1 );
+}
+.blueGradient{
+    background: #38caf5;
+    background: -moz-linear-gradient(left, #38caf5 0%, #38f564 100%);
+    background: -webkit-linear-gradient(left, #38caf5 0%,#38f564 100%);
+    background: linear-gradient(to right, #38caf5 0%,#38f564 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#38caf5', endColorstr='#38f564',GradientType=1 );
+}
