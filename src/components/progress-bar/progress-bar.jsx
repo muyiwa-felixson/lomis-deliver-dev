@@ -5,11 +5,9 @@ require('./progress-bar.scss');
 
 class ProgressBar extends Component {
   state = {};
-
   checkProgressStatus = () => { // eslint-disable-line consistent-return
     const today = new Date();
     const date = this.props.roundDetails.doc.endDate;
-
     if (today.getTime() > Date.parse(date)) {
       return 'complete round';
     } else if (today.getTime() === Date.parse(date)) {
@@ -18,29 +16,21 @@ class ProgressBar extends Component {
       return 'incomplete round';
     }
   }
-
   handleDate = () => {
     const today = new Date();
     return `${today.getFullYear()}-0${today.getMonth() + 1}-${today.getDate()}`;
   }
-
   render() {
     const roundDetails = this.props.roundDetails;
     const status = this.props.status[0].value;
-    status.totalDeliveries = 50;
-    status.completedDeliveries = 40;
-    status.cancelledDeliveries = 1;
-    status.failedDeliveries = 1;
-    status.noReport = 1;
-    status.expectedToday = 40;
     const full = status.completedDeliveries + status.cancelledDeliveries +
-      status.failedDeliveries + status.noReport;
+      status.failedDeliveries + status.unreportedDeliveries;
     const fullBar = (full / status.totalDeliveries) * 100;
-    const expected = (status.expectedToday / status.totalDeliveries) * 100;
+    const expected = (status.expectedTillDateDeliveries / status.totalDeliveries) * 100;
     const complete = (status.completedDeliveries / full) * 100;
     const cancelled = (status.cancelledDeliveries / full) * 100;
     const failed = (status.failedDeliveries / full) * 100;
-    const noReport = (status.noReport / full) * 100;
+    const noReport = (status.unreportedDeliveries / full) * 100;
     return (
       <div className="page-content row radius-primary round-progress-box">
         <div>
@@ -70,7 +60,7 @@ class ProgressBar extends Component {
               </ReactToooltip>
               <div data-tip data-for="norep-tip" className="progressStatus greyGrad" style={{ width: `${noReport}%` }} />
               <ReactToooltip id="norep-tip" type="dark" effect="solid">
-                <p>{`${status.noReport} No Report`}</p>
+                <p>{`${status.unreportedDeliveries} No Report`}</p>
               </ReactToooltip>
             </div>
           </div>
