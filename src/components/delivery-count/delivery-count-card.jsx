@@ -15,11 +15,11 @@ class DeliveryCountCard extends Component {
       <div>
         { this.props.round && this.props.round.roundStatus.length > 0 ?
           <div className="row dash-contain">
-            <DeliveryCard color="lightblue" type="Expected Delivery" count={this.props.round.roundStatus[0].value.totalDeliveries} icon="truck-li" />
-            <DeliveryCard color="blue" type="Actual Delivery" count={this.props.round.roundStatus[0].value.completedDeliveries} icon="like-li" />
-            <DeliveryCard color="red" type="Failed Delivery" count={this.props.round.roundStatus[0].value.failedDeliveries} icon="info" />
-            <DeliveryCard color="green" type="Billable Delivery" count={this.props.round.roundStatus[0].value.billableDeliveries} icon="receipt" />
-            <DeliveryCard color="orange" type="Cancelled Delivery" count={this.props.round.roundStatus[0].value.cancelledDeliveries} icon="ban-fa" />
+            <DeliveryCard color="lightblue" type="Expected" count={this.props.round.roundStatus[0].value.totalDeliveries} icon="truck-li" />
+            <DeliveryCard color="blue" type="Actual" count={this.props.round.roundStatus[0].value.completedDeliveries} icon="like-li" />
+            <DeliveryCard color="red" type="Failed" count={this.props.round.roundStatus[0].value.failedDeliveries} icon="info" />
+            <DeliveryCard color="green" type="Billable" count={this.props.round.roundStatus[0].value.billableDeliveries} icon="receipt" />
+            <DeliveryCard color="orange" type="Cancelled" count={this.props.round.roundStatus[0].value.cancelledDeliveries} icon="ban-fa" />
             <DeliveryCard color="grey" type="No Report" count={this.props.round.roundStatus[0].value.uncompletedDeliveries} icon="record" />
           </div> : '' }
       </div>
