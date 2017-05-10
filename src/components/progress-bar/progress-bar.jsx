@@ -35,6 +35,7 @@ class ProgressBar extends Component {
     const cancelled = (status.cancelledDeliveries / full) * 100;
     const failed = (status.failedDeliveries / full) * 100;
     const noReport = (status.unreportedDeliveries / full) * 100;
+
     return (
       <div className="page-content row radius-primary round-progress-box">
         <div>
