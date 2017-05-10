@@ -1,4 +1,4 @@
-import { LOCATIONS_REQUESTS, LOCATIONS_SUCCESS, LOCATIONS_FAILURE } from 'redux/constants/locations';
+import { LOCATIONS_REQUESTS, LOCATIONS_SUCCESS, LOCATIONS_FAILURE } from 'redux/constants';
 import config from 'config';
 
 export default function fetchLocations() {

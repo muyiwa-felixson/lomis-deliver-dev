@@ -1,4 +1,4 @@
-import { GET_USER } from 'redux/constants/users';
+import { GET_USER } from 'redux/constants';
 
 const getUser = result => ({
   type: GET_USER,

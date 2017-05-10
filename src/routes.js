@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { GET_USER } from 'redux/constants/users';
+import { GET_USER } from 'redux/constants';
 import { App, Dashboard, Login } from 'containers';
 import Api from 'helpers/api';
 import config from 'config';

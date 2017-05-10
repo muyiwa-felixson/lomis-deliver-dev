@@ -1,3 +1,6 @@
+export const LOCATIONS_REQUESTS = '@@LOMIS/locations/LOCATION_REQUESTS';
+export const LOCATIONS_SUCCESS = '@@LOMIS/locations/LOCATION_SUCCESSS';
+export const LOCATIONS_FAILURE = '@@LOMIS/locations/LOCATION_FAILURE';
 export const ROUNDS_FAILURE = '@@LOMIS/rounds/FAILURE';
 export const ROUNDS_SUCCESS = '@@LOMIS/rounds/SUCCESS';
 export const ROUNDS_REQUESTS = '@@LOMIS/rounds/REQUESTS';
@@ -14,3 +17,4 @@ export const COUNT_REQUESTS = '@@LOMIS/rounds/COUNT_REQUESTS';
 export const COUNT_SUCCESS = '@@LOMIS/rounds/COUNT_SUCCESS';
 export const COUNT_FAILURE = '@@LOMIS/rounds/COUNT_FAILURE';
 export const TOGGLE_CLICKED = '@@LOMIS/rounds/TOGGLED_CLICKED';
+export const GET_USER = '@@LOMIS/users/GET_USER';

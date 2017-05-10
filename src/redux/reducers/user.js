@@ -1,4 +1,4 @@
-import { GET_USER } from 'redux/constants/users';
+import { GET_USER } from 'redux/constants';
 
 export default (state = {}, action) => {
   switch (action.type) {
