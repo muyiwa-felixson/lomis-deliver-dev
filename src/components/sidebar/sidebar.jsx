@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { toastr } from 'react-redux-toastr';
 import { ImportPop } from 'components';
 import Select from 'react-select';
-import helper from 'helpers/round';
-import { fetchImportedRound, fetchRoundCount, runImport, toggleSidebar } from 'redux/actions/roundActions';
+import helper from 'helpers/validation';
+import { fetchImportedRound, fetchSingleRound, fetchRoundCount, runImport, toggleSidebar } from 'redux/actions/roundActions';
 
 const roundTypeOptions = [
   { value: 'Bi-Weekly', label: 'Bi-Weekly' },
@@ -23,6 +23,7 @@ class Sidebar extends Component {
     roundNumber: '',
     sheetId: '',
     validUrl: null,
+    validDate: null,
     validRoundNumber: null,
     status: 'running',
     disableLink: '',
@@ -91,6 +92,47 @@ class Sidebar extends Component {
     });
   }
 
+  completeImport = (roundCode) => {
+    toastr.success('Completed Data Import!', { timeOut: 3000 });
+    this.setState({ status: 'complete', disableLink: '' });
+    this.props.fetchImportedRound(roundCode);
+    this.props.fetchRoundCount(roundCode);
+  }
+
+  pollServer = (roundCode) => {
+    this.props.fetchSingleRound(roundCode)
+      .then(() => {
+        this.completeImport(roundCode);
+      })
+      .catch(() => {
+        setTimeout(() => {
+          this.pollServer(roundCode);
+        }, 10000);
+      });
+  }
+
+  endDateCheck = (e) => {
+    const sd = this.state.startDate;
+    const ed = e.target.value;
+    const check = helper.checkModalDate(sd, ed);
+    if (check) {
+      this.setState({ validDate: null });
+    } else {
+      this.setState({ validDate: 'error' });
+    }
+  }
+
+  startDateCheck = (e) => {
+    const ed = this.state.endDate;
+    const sd = e.target.value;
+    const check = helper.checkModalDate(sd, ed);
+    if (check) {
+      this.setState({ validDate: null });
+    } else {
+      this.setState({ validDate: 'error' });
+    }
+  }
+
   handleImport = (e) => {
     e.preventDefault();
     this.setState({ showModal: false, disableLink: 'disabled' });
@@ -106,16 +148,13 @@ class Sidebar extends Component {
 
     this.props.runImport(importObject)
       .then((res) => {
-        toastr.info(res.message, { timeOut: 3000 });
-        this.setState({ roundCode: res.roundCode });
-        setTimeout(() => {
-          toastr.success('Completed Data Import!', { timeOut: 3000 });
-          this.setState({ status: 'complete', disableLink: '' });
-          this.props.fetchImportedRound(res.roundCode);
-          this.props.fetchRoundCount(res.roundCode);
-        }, 120000);
+        toastr.info('Spreadsheet import in progress.', { timeOut: 3000 });
+        const roundCode = res.roundCode;
+        this.setState({ roundCode });
+        this.pollServer(roundCode);
       })
       .catch((err) => {
+        this.setState({ disableLink: '' });
         toastr.error(err.message, { timeOut: 3000 });
       });
   }
@@ -129,8 +168,9 @@ class Sidebar extends Component {
   }
 
   render() {
+    const check = helper.checkModalDate(this.state.startDate, this.state.endDate);
     const importCheck = this.props.roundObj && this.props.roundObj.importLoading;
-    const buttonStyle = (this.state.location === '' || this.state.location === null || this.state.roundNumber === '' || this.state.validRoundNumber === 'error' || this.state.startDate === '' || this.state.endDate === '' || this.state.sheetId === '' || this.state.validUrl === 'error' || this.state.roundType === '' || this.state.roundType === null) ? ' disabled' : '';
+    const buttonStyle = (this.state.location === '' || this.state.location === null || this.state.roundNumber === '' || this.state.validRoundNumber === 'error' || this.state.startDate === '' || this.state.endDate === '' || this.state.sheetId === '' || this.state.validUrl === 'error' || this.state.roundType === '' || this.state.roundType === null || !check) ? ' disabled' : '';
     const opt = this.props.locationsObj !== undefined ?
     this.props.locationsObj.locations.map((location) => {
       const obj = {};
@@ -193,16 +233,16 @@ class Sidebar extends Component {
                 </FormGroup>
                 <Row>
                   <Col sm={6}>
-                    <FormGroup >
+                    <FormGroup validationState={this.state.validDate}>
                       <ControlLabel>Start Date</ControlLabel>
-                      <FormControl type="date" name="startDate" value={this.state.startDate} onChange={this.handleStartDateChange} />
+                      <FormControl type="date" name="startDate" value={this.state.startDate} onBlur={this.startDateCheck} onChange={this.handleStartDateChange} />
                       <FormControl.Feedback />
                     </FormGroup>
                   </Col>
                   <Col sm={6}>
-                    <FormGroup >
+                    <FormGroup validationState={this.state.validDate}>
                       <ControlLabel>End Date</ControlLabel>
-                      <FormControl type="date" name="endDate" value={this.state.endDate} onChange={this.handleEndDateChange} />
+                      <FormControl type="date" name="endDate" value={this.state.endDate} onBlur={this.endDateCheck} onChange={this.handleEndDateChange} />
                       <FormControl.Feedback />
                     </FormGroup>
                   </Col>
@@ -243,6 +283,7 @@ Sidebar.propTypes = {
   locationsObj: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   fetchImportedRound: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
   fetchRoundCount: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
+  fetchSingleRound: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
   runImport: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
   toggleSidebar: PropTypes.func.isRequired, // eslint-disable-line react/forbid-prop-types
 };
@@ -254,4 +295,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps,
-  { fetchImportedRound, fetchRoundCount, runImport, toggleSidebar })(Sidebar);
+  { fetchImportedRound, fetchSingleRound, fetchRoundCount, runImport, toggleSidebar })(Sidebar);
