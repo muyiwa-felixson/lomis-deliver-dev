@@ -60,7 +60,7 @@ class ProgressBar extends Component {
               </ReactToooltip>
               <div data-tip data-for="norep-tip" className="progressStatus greyGrad" style={{ width: `${noReport}%` }} />
               <ReactToooltip id="norep-tip" type="dark" effect="solid">
-                <p>{`${status.unreportedDeliveries} Unreported Deliveries`}</p>
+                <p>{`${status.noReport} No Report`}</p>
               </ReactToooltip>
             </div>
           </div>
