@@ -7,7 +7,7 @@ class DeliveryCard extends Component {
     return (
       <div className="col-md-4 col-sm-4">
         <div className="dash-summary radius-primary row">
-          <div className={`col-xs-4 col-md-4 col-lg-4 micon ${this.props.color}`}>
+          <div className={`col-xs-4 col-md-4 col-lg-4 micon ${this.props.color}`} >
             <i className={`icon icon-${this.props.icon}`} />
           </div>
           <div className="col-xs-8 col-md-8 col-lg-8 mdet">
