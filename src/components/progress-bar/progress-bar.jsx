@@ -27,13 +27,6 @@ class ProgressBar extends Component {
   render() {
     const roundDetails = this.props.roundDetails;
     const status = this.props.status[0].value;
-    console.log(status,"status");
-    // status.totalDeliveries = 50;
-    // status.completedDeliveries = 40;
-    // status.cancelledDeliveries = 1;
-    // status.failedDeliveries = 1;
-    // status.noReport = 1;
-    // status.expectedToday = 40;
     const full = status.completedDeliveries + status.cancelledDeliveries +
       status.failedDeliveries + status.unreportedDeliveries;
     const fullBar = (full / status.totalDeliveries) * 100;
