@@ -19,7 +19,7 @@ class StatusChart extends Component {
   convertStatus = (status) => {
     const percent = {};
     percent.actualDeliveries = (status.completedDeliveries / status.totalDeliveries) * 100;
-    percent.uncompletedDeliveries = (status.uncompletedDeliveries / status.totalDeliveries) * 100;
+    percent.unreportedDeliveries = (status.unreportedDeliveries / status.totalDeliveries) * 100;
     percent.cancelledDeliveries = (status.cancelledDeliveries / status.totalDeliveries) * 100;
 
     return percent;
@@ -38,7 +38,7 @@ class StatusChart extends Component {
       emphasis: false,
     },
     {
-      percent: (status.uncompletedDeliveries / status.totalDeliveries) * 100,
+      percent: (status.unreportedDeliveries / status.totalDeliveries) * 100,
       color: '#aaa',
       emphasis: false,
     }];
