@@ -18,3 +18,6 @@ export const COUNT_SUCCESS = '@@LOMIS/rounds/COUNT_SUCCESS';
 export const COUNT_FAILURE = '@@LOMIS/rounds/COUNT_FAILURE';
 export const TOGGLE_CLICKED = '@@LOMIS/rounds/TOGGLED_CLICKED';
 export const GET_USER = '@@LOMIS/users/GET_USER';
+export const LOGIN_REQUEST = '@@LOMIS/users/LOGIN_REQUEST';
+export const LOGIN_SUCCESS = '@@LOMIS/users/LOGIN_SUCCESS';
+export const LOGIN_FAILURE = '@@LOMIS/users/LOGIN_FAILURE';
