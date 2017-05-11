@@ -1,10 +1,10 @@
-import { GET_USER, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from 'redux/constants';
+import { GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from 'redux/constants';
 import config from 'config';
 
-export function getUser(result) {
+export function getUser() {
   return {
-    type: GET_USER,
-    result,
+    types: [GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILURE],
+    promise: client => client.get(config.USER_URL),
   };
 }
 
