@@ -25,7 +25,7 @@ class Dashboard extends Component {
         <Header userObject={this.props.userObject} router={this.props.router} />
         <div id="wrapper" className={this.props.roundsObject.toggleState}>
           <Sidebar />
-          <MyLoader message="Please wait!" />
+          <MyLoader message="LOADING!" display />
           <div id="page-content-wrapper">
             <div className="vertical-offset-50">
               { locationsCheck ? <DashboardTitle round={this.props.roundsObject} locations={this.props.locationsObject} /> : '' }

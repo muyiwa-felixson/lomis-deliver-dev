@@ -6,9 +6,9 @@ class MyLoader extends Component {
   state = {};
 
   render() {
-    const MyDisplay = this.props.display;
+    const MyDisplay = this.props.display === true ? 'block' : 'none';
     return (
-      <div className="fader" { MyDisplay === true ?  style={{ display: none }} : style={{ display: block }} } >
+      <div className="fader" style={{ display: MyDisplay }}>
         <table className="loader-table">
           <tr className="loader-top"><td><div /></td><td><div /></td><td><div /></td><td><div /></td><td><div /></td><td><div /></td><td><div /></td><td><div /></td><td><div /></td><td><div /></td></tr>
           <tr className="loader-middle"><td><div /></td><td><div /></td><td><div /></td><td><div /></td><td><div /></td><td><div /></td><td><div /></td><td><div /></td><td><div /></td><td><div /></td></tr>
@@ -21,5 +21,6 @@ class MyLoader extends Component {
 }
 MyLoader.propTypes = {
   message: PropTypes.string.isRequired,
+  display: PropTypes.bool,
 };
 export default MyLoader;
