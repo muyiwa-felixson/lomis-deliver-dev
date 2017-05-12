@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Header, Sidebar, DashboardTitle, DeliveryCountCard, StatusChart, ProgressBar } from 'components';
+import { Header, Sidebar, DashboardTitle, DeliveryCountCard, StatusChart, ProgressBar, MyLoader } from 'components';
 import { connect } from 'react-redux';
 import { fetchRounds, fetchSingleRound, fetchRoundCount } from 'redux/actions/roundActions';
 import fetchLocations from 'redux/actions/locationActions';
@@ -25,6 +25,7 @@ class Dashboard extends Component {
         <Header userObject={this.props.userObject} router={this.props.router} />
         <div id="wrapper" className={this.props.roundsObject.toggleState}>
           <Sidebar />
+          <MyLoader message="Please wait!" />
           <div id="page-content-wrapper">
             <div className="vertical-offset-50">
               { locationsCheck ? <DashboardTitle round={this.props.roundsObject} locations={this.props.locationsObject} /> : '' }

@@ -8,11 +8,7 @@ class StatusChart extends Component {
 
   chart2 = [
     { percent: 1, color: '#2f97c9', emphasis: true },
-    { percent: 0, color: '#77d0fb', emphasis: false },
-    { percent: 2, color: '#caeeff', emphasis: false },
     { percent: 90, color: '#95c98a', emphasis: false },
-    { percent: 2, color: '#e5825d', emphasis: false },
-    { percent: 1, color: '#d35525', emphasis: false },
     { percent: 3, color: '#a23d17', emphasis: true },
   ];
 
@@ -85,18 +81,6 @@ class StatusChart extends Component {
               <i className="icon icon-exit-to-app" />
             </a>
             <div className="row stat-legend more-point">
-              <div className="col-md-6 col-xs-12">
-                <span className="legend-data">
-                  <i className="icon icon-circle cblue" />
-                  Too Early Delivery
-                  </span>
-              </div>
-              <div className="col-md-6 col-xs-12">
-                <span className="legend-data">
-                  <i className="icon icon-circle cred" />
-                  Too Late Deliveries
-                </span>
-              </div>
               <div className="col-md-6 col-xs-12">
                 <span className="legend-data">
                   <i className="icon icon-circle cblue-fade" />
