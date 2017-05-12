@@ -1,7 +1,28 @@
-import { ROUNDS_REQUESTS, ROUNDS_SUCCESS, ROUNDS_FAILURE, COUNT_REQUESTS, COUNT_SUCCESS, COUNT_FAILURE, SINGLE_ROUND_FAILURE, SINGLE_ROUND_SUCCESS, SINGLE_ROUND_REQUEST, IMPORTED_ROUND_REQUESTS, IMPORTED_ROUND_SUCCESS, IMPORTED_ROUND_FAILURE, IMPORT_REQUESTS, IMPORT_SUCCESS, IMPORT_FAILURE, TOGGLE_CLICKED } from 'redux/constants/rounds';
+import {
+        ROUNDS_REQUESTS,
+        ROUNDS_SUCCESS,
+        ROUNDS_FAILURE,
+        COUNT_REQUESTS,
+        COUNT_SUCCESS,
+        COUNT_FAILURE,
+        SINGLE_ROUND_FAILURE,
+        SINGLE_ROUND_SUCCESS,
+        SINGLE_ROUND_REQUESTS,
+        ROUNDS_BY_LOCATION_REQUESTS,
+        ROUNDS_BY_LOCATION_SUCCESS,
+        ROUNDS_BY_LOCATION_FAILURE,
+        IMPORTED_ROUND_REQUESTS,
+        IMPORTED_ROUND_SUCCESS,
+        IMPORTED_ROUND_FAILURE,
+        IMPORT_REQUESTS,
+        IMPORT_SUCCESS,
+        IMPORT_FAILURE,
+        TOGGLE_CLICKED,
+      } from 'redux/constants';
 
 const initialState = {
   round: {},
+  rounds: [],
   isLoading: false,
   error: false,
   roundStatus: [],
@@ -20,7 +41,7 @@ export default (state = initialState, action) => {
     }
     case ROUNDS_FAILURE:
       return { ...state, round: action.result, isLoading: false, error: true };
-    case SINGLE_ROUND_REQUEST:
+    case SINGLE_ROUND_REQUESTS:
       return { ...state, isLoading: true, error: false };
     case SINGLE_ROUND_SUCCESS:
       return { ...state, round: action.result[0], isLoading: false, error: false };
@@ -32,6 +53,12 @@ export default (state = initialState, action) => {
       return { ...state, roundStatus: action.result, isLoading: false, error: false };
     case COUNT_FAILURE:
       return { ...state, round: action.result, isLoading: false, error: true };
+    case ROUNDS_BY_LOCATION_REQUESTS:
+      return { ...state, isLoading: true };
+    case ROUNDS_BY_LOCATION_SUCCESS:
+      return { ...state, rounds: action.result, isLoading: false };
+    case ROUNDS_BY_LOCATION_FAILURE:
+      return { ...state, error: action.result, isLoading: false };
     case IMPORTED_ROUND_REQUESTS:
       return { ...state, importLoading: true, error: false };
     case IMPORTED_ROUND_SUCCESS:

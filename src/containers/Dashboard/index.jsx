@@ -22,7 +22,7 @@ class Dashboard extends Component {
 
     return (
       <div>
-        <Header user={this.props.userObject} router={this.props.router} />
+        <Header userObject={this.props.userObject} router={this.props.router} />
         <div id="wrapper" className={this.props.roundsObject.toggleState}>
           <Sidebar />
           <div id="page-content-wrapper">

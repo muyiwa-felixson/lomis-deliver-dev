@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import cookie from 'react-cookie';
 import { toastr } from 'react-redux-toastr';
-import Api from 'helpers/api';
-import config from 'config';
+import { connect } from 'react-redux';
+import { loginUser } from 'redux/actions/userActions';
 
 require('./login.scss');
 const elogo = require('./images/ehealth-logo.png');
@@ -24,15 +24,12 @@ class Login extends Component {
   handleLogin = (e) => {
     e.preventDefault();
 
-    const apiClient = new Api();
     const { username, password } = e.target;
     const userDetails = {
       username: username.value,
       password: password.value,
     };
-    apiClient.post(config.AUTH_URL, 'application/x-www-form-urlencoded', {
-      data: userDetails,
-    })
+    this.props.loginUser(userDetails)
     .then((res) => {
       cookie.save('accessToken', res.token, { path: '/' });
       this.props.router.push('/');
@@ -90,6 +87,11 @@ class Login extends Component {
 
 Login.propTypes = {
   router: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  loginUser: PropTypes.func.isRequired,
 };
 
-export default Login;
+const mapStateToProps = state => ({
+  userObject: state.user,
+});
+
+export default connect(mapStateToProps, { loginUser })(Login);

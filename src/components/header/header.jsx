@@ -24,7 +24,7 @@ class Header extends Component {
             <div className="col-md-12 col-offset-250 text-right dropdown-container">
               <div className="dropdown">
                 <button className="btn btn-link dropdown-toggle radius-secondary bk_trans" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  <i className="icon icon-user pad-right" /> {this.props.user.name}
+                  <i className="icon icon-user pad-right" /> {this.props.userObject.user.name}
                 </button>
                 <ul className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                   <li><a><i className="icon icon-settings pad-right" />Manage Profile</a></li>
@@ -41,7 +41,7 @@ class Header extends Component {
 
 Header.propTypes = {
   router: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  user: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  userObject: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 export default Header;
