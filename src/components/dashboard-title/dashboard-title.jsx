@@ -42,7 +42,7 @@ class DashboardTitle extends Component {
   }
 
   handleApply = (event, picker) => {
-    const location = this.state.locationValue !== '' ? this.state.location : 'Kano';
+    const location = this.state.locationValue !== '' ? this.state.locationValue : 'Kano';
     let startDate = new Date(picker.startDate.format('YYYY-MM-DD'));
     let endDate = new Date(picker.endDate.format('YYYY-MM-DD'));
     startDate = startDate.toISOString();
