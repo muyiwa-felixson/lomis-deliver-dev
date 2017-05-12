@@ -22,6 +22,7 @@ import {
 
 const initialState = {
   round: {},
+  rounds: [],
   isLoading: false,
   error: false,
   roundStatus: [],
@@ -55,7 +56,7 @@ export default (state = initialState, action) => {
     case ROUNDS_BY_LOCATION_REQUESTS:
       return { ...state, isLoading: true };
     case ROUNDS_BY_LOCATION_SUCCESS:
-      return { ...state, round: action.result, isLoading: false };
+      return { ...state, rounds: action.result, isLoading: false };
     case ROUNDS_BY_LOCATION_FAILURE:
       return { ...state, error: action.result, isLoading: false };
     case IMPORTED_ROUND_REQUESTS:

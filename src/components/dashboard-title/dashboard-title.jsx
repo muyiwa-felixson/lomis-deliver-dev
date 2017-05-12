@@ -1,18 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import Select from 'react-select';
 import DatetimeRangePicker from 'react-bootstrap-datetimerangepicker';
-import Api from 'helpers/api';
 import config from 'config';
 import { connect } from 'react-redux';
-import { fetchSingleRound, fetchRoundCount } from 'redux/actions/roundActions';
+import { fetchSingleRound, fetchRoundCount, getRoundsByLocation } from 'redux/actions/roundActions';
 
 import 'bootstrap/scss/bootstrap.scss';
 import 'bootstrap-daterangepicker/daterangepicker.scss';
 import 'react-select/scss/default.scss';
 import './date-range.scss';
-
-
-const apiClient = new Api();
 
 class DashboardTitle extends Component {
   state = {
@@ -32,7 +28,7 @@ class DashboardTitle extends Component {
   }
 
   getRoundListByLocation = (val) => {
-    apiClient.get(`${config.ROUND_LOCATION_URL}/${val}`)
+    this.props.getRoundsByLocation(config.ROUND_LOCATION_URL, val)
       .then((res) => {
         const result = res.map((round) => {
           const roundObj = {};
@@ -55,7 +51,7 @@ class DashboardTitle extends Component {
       startDate: picker.startDate,
       endDate: picker.endDate,
     });
-    apiClient.get(`${config.LOCATION_AND_DATE_URL}/${location}`)
+    this.props.getRoundsByLocation(config.LOCATION_AND_DATE_URL, location)
       .then((resp) => {
         const result = resp.filter((round) => { // eslint-disable-line
           if (startDate <= round.value[0] && endDate >= round.value[0]) {
@@ -172,6 +168,7 @@ class DashboardTitle extends Component {
 DashboardTitle.propTypes = {
   round: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   locations: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  getRoundsByLocation: PropTypes.func.isRequired,
   singleRound: PropTypes.func.isRequired,
   roundCount: PropTypes.func.isRequired,
 };
@@ -181,4 +178,5 @@ export default connect(mapStatetoProps,
   {
     singleRound: fetchSingleRound,
     roundCount: fetchRoundCount,
+    getRoundsByLocation,
   })(DashboardTitle);

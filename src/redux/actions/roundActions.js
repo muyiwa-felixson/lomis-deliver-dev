@@ -49,10 +49,10 @@ export function fetchRoundCount(id) {
   };
 }
 
-export function getRoundsByLocation(location) {
+export function getRoundsByLocation(url, location) {
   return {
     types: [ROUNDS_BY_LOCATION_REQUESTS, ROUNDS_BY_LOCATION_SUCCESS, ROUNDS_BY_LOCATION_FAILURE],
-    promise: client => client.get(`${config.ROUND_LOCATION_URL}/${location}`),
+    promise: client => client.get(`${url}/${location}`),
   };
 }
 
